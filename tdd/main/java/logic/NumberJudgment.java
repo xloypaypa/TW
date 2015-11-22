@@ -8,7 +8,7 @@ public class NumberJudgment {
     private int resultA;
     private int resultB;
 
-    public String compare(String from, String to) throws RuntimeException {
+    public String judge(String from, String to) throws RuntimeException {
         if (from.length() != 4 || to.length() != 4) {
             throw new RuntimeException(lengthError);
         }
