@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 public class GuessGameTest {
 
     @Test
-    public void shouldBuild0123AndGet1A2BWhenInput8203() {
+    public void shouldBuild0123AndGet1A2BWhenInput8203() throws Exception {
         Random random = mock(Random.class);
         when(random.nextInt()).thenReturn(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 

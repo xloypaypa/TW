@@ -8,7 +8,7 @@ public class NumberJudgment {
     private int resultA;
     private int resultB;
 
-    public String judge(String from, String to) throws RuntimeException {
+    public String judge(String from, String to) throws Exception {
         if (from.length() != 4 || to.length() != 4) {
             throw new RuntimeException(lengthError);
         }
@@ -36,12 +36,12 @@ public class NumberJudgment {
         }
     }
 
-    private void checkRepeatNumber(String a) {
+    private void checkRepeatNumber(String a) throws Exception {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (i == j) continue;
                 if (a.charAt(i) == a.charAt(j)) {
-                    throw new RuntimeException(repeatError);
+                    throw new Exception(repeatError);
                 }
             }
         }

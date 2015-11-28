@@ -20,7 +20,7 @@ public class GuessGame {
         this.number = new NumberBuilder(this.random).buildNumber();
     }
 
-    public String guess(String value) {
+    public String guess(String value) throws Exception {
         if (checkNumberDuplicate(value)) return inputHaveRepeat;
 
         String judgeResult = new NumberJudgment().judge(this.number, value);

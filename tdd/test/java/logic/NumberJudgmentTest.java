@@ -31,7 +31,7 @@ public class NumberJudgmentTest {
         try {
             new NumberJudgment().judge("5555", "1234");
             fail();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             assertEquals(NumberJudgment.repeatError, e.getMessage());
         }
     }
