@@ -8,16 +8,14 @@ public class GuessGame {
     public static final String lose = "Game Over";
     public static final String inputHaveRepeat = "Cannot input duplicate numbers!";
 
-    protected int chance;
-    protected Random random;
-    protected String number;
-    protected boolean isEnded;
+    private int chance;
+    private final String number;
+    private boolean isEnded;
 
     public GuessGame(int chance, Random random) {
         this.chance = chance;
-        this.random = random;
         this.isEnded = false;
-        this.number = new NumberBuilder(this.random).buildNumber();
+        this.number = new NumberBuilder(random).buildNumber();
     }
 
     public String guess(String value) throws Exception {
@@ -45,7 +43,7 @@ public class GuessGame {
         return "Please input your number(" + this.chance + "):";
     }
 
-    protected boolean checkNumberDuplicate(String value) {
+    private boolean checkNumberDuplicate(String value) {
         boolean[] visited = new boolean[10];
         for (int i = 0; i < value.length(); i++) {
             int number = value.charAt(i) - '0';

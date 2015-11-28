@@ -3,7 +3,9 @@ package logic;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -30,12 +32,11 @@ public class NumberBuilderTest {
 
     @Test
     public void testBuildNumberNotRepeat() throws Exception {
+        Set<Character> set = new HashSet<>();
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (i == j) continue;
-                assertNotEquals(result.charAt(i), result.charAt(j));
-            }
+            set.add(result.charAt(i));
         }
+        assertEquals(4, set.size());
     }
 
 }

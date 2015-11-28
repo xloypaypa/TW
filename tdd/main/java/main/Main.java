@@ -5,7 +5,7 @@ import logic.GuessGame;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Main {
+class Main {
     public static void main(String[] args) throws Exception {
         GuessGame guessGame = new GuessGame(6, new Random());
         Scanner scanner = new Scanner(System.in);

@@ -1,6 +1,6 @@
 package logic;
 
-public class NumberJudgment {
+class NumberJudgment {
 
     public static final String lengthError = "The number length should be 4.";
     public static final String repeatError = "The number should not have repeat.";

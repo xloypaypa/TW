@@ -3,9 +3,9 @@ package logic;
 import java.util.Arrays;
 import java.util.Random;
 
-public class NumberBuilder {
+class NumberBuilder {
 
-    private Random random;
+    private final Random random;
 
     public NumberBuilder(Random random) {
         this.random = random;
@@ -30,8 +30,8 @@ public class NumberBuilder {
     }
 
     private static class Node implements Comparable<Node> {
-        private int value;
-        private int key;
+        private final int value;
+        private final int key;
 
         private Node(int value, Random random) {
             this.value = value;
