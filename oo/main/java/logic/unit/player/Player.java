@@ -12,7 +12,7 @@ public interface Player extends AttackAble {
 
     String getName();
 
-    void beAttacked(AttackAble attackAble);
+    void beAttacked(Player player);
 
     boolean isAlive();
 

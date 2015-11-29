@@ -8,6 +8,7 @@ import logic.unit.player.Player;
  */
 public abstract class Game {
 
+    public static final String ALL_PLAYER_DIE = "all player die";
     protected Player[] players;
 
     public Game() {
@@ -24,7 +25,7 @@ public abstract class Game {
         return players;
     }
 
-    public abstract boolean isEnd();
+    public abstract Player getWinner() throws Exception;
 
     public abstract Player nowAttacker();
 

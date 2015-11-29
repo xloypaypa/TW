@@ -18,13 +18,27 @@ public class DefaultGame extends Game {
     }
 
     @Override
-    public boolean isEnd() {
+    public Player getWinner() throws Exception {
+        boolean haveWinner = false;
         for (Player player : players) {
             if (!player.isAlive()) {
-                return true;
+                haveWinner = true;
             }
         }
-        return false;
+        if (haveWinner) {
+            return solveWinner();
+        } else {
+            return null;
+        }
+    }
+
+    private Player solveWinner() throws Exception {
+        for (Player player : players) {
+            if (player.isAlive()) {
+                return player;
+            }
+        }
+        throw new Exception(ALL_PLAYER_DIE);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package main;
 
-import logic.Game;
-import logic.playerOld.Normal;
+import logic.game.DefaultGame;
+import logic.game.Game;
+import logic.log.GameLog;
+import logic.unit.player.NormalPlayer;
 
 /**
  * Created by xlo on 15/11/28.
@@ -9,11 +11,12 @@ import logic.playerOld.Normal;
  */
 public class Main {
 
-    public static void main(String[] args) {
-//        Game game = new Game(new Normal("李四", 100, 10), new Normal("haha", 1000, 10));
-//        while (!game.isEnd()) {
-//            String now = game.nextRound();
-//            System.out.println(now);
-//        }
+    public static void main(String[] args) throws Exception {
+        Game game = new DefaultGame(new NormalPlayer("a", 100, 10, GameLog.getGameLog()),
+                new NormalPlayer("b", 100, 20, GameLog.getGameLog()));
+        while (game.getWinner() == null) {
+            game.runOneRound();
+        }
+        GameLog.getGameLog().showWinner(game.getWinner());
     }
 }

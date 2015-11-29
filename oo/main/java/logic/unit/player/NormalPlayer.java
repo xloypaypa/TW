@@ -1,6 +1,6 @@
 package logic.unit.player;
 
-import logic.unit.AttackAble;
+import logic.log.GameLog;
 
 /**
  * Created by xlo on 15/11/29.
@@ -10,11 +10,13 @@ public class NormalPlayer implements Player {
 
     protected String name;
     protected float hp, attack;
+    protected GameLog gameLog;
 
-    public NormalPlayer(String name, float hp, float attack) {
+    public NormalPlayer(String name, float hp, float attack, GameLog gameLog) {
         this.name = name;
         this.hp = hp;
         this.attack = attack;
+        this.gameLog = gameLog;
     }
 
     @Override
@@ -33,8 +35,9 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public void beAttacked(AttackAble attackAble) {
-        this.hp -= attackAble.getAttack();
+    public void beAttacked(Player player) {
+        this.hp -= player.getAttack();
+        gameLog.afterPlayerBeAttacked(this, player);
     }
 
     @Override
