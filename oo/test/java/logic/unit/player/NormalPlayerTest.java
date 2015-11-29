@@ -1,5 +1,6 @@
 package logic.unit.player;
 
+import logic.job.Job;
 import logic.log.GameLog;
 import org.junit.Test;
 
@@ -12,6 +13,11 @@ import static org.mockito.Mockito.verify;
  * it's the testing code for normal player
  */
 public class NormalPlayerTest {
+
+    @Test
+    public void normal_player_job_should_be_normal() {
+        assertEquals(Job.normal, new NormalPlayer("a", 10, 10, GameLog.getGameLog()).getJobName());
+    }
 
     @Test
     public void should_a_normal_player_who_have_100_hp_remain_90_hp_when_be_attacked_by_item_who_have_10_attack_unit() {

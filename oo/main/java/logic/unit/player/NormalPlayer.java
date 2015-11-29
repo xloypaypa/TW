@@ -1,5 +1,8 @@
 package logic.unit.player;
 
+import logic.job.DefaultJob;
+import logic.job.Job;
+import logic.job.JobType;
 import logic.log.GameLog;
 
 /**
@@ -11,9 +14,11 @@ public class NormalPlayer implements Player {
     protected String name;
     protected float hp, attack;
     protected GameLog gameLog;
+    protected Job job;
 
     public NormalPlayer(String name, float hp, float attack, GameLog gameLog) {
         this.name = name;
+        this.job = new DefaultJob(JobType.NORMAL);
         this.hp = hp;
         this.attack = attack;
         this.gameLog = gameLog;
@@ -25,7 +30,7 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public double getHp() {
+    public float getHp() {
         return this.hp;
     }
 
@@ -36,12 +41,22 @@ public class NormalPlayer implements Player {
 
     @Override
     public void beAttacked(Player player) {
-        this.hp -= player.getAttack();
+        this.hp -= calculateHurt(player);
         gameLog.afterPlayerBeAttacked(this, player);
+    }
+
+    @Override
+    public float calculateHurt(Player player) {
+        return player.getAttack();
     }
 
     @Override
     public boolean isAlive() {
         return this.hp >= 0;
+    }
+
+    @Override
+    public String getJobName() {
+        return this.job.getJobName();
     }
 }

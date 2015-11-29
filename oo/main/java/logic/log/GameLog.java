@@ -1,6 +1,8 @@
 package logic.log;
 
+import logic.job.Job;
 import logic.unit.player.Player;
+import logic.unit.player.SoliderPlayer;
 
 import java.text.DecimalFormat;
 
@@ -33,9 +35,16 @@ public class GameLog {
 
     protected String buildAttackMessage(Player player, Player attacker) {
         DecimalFormat decimalFormat = new DecimalFormat("0");
-        return attacker.getName() + "攻击了" + player.getName() + ",对" +
-                    player.getName() + "造成了" + decimalFormat.format(attacker.getAttack()) + "点伤害,"
-                    + player.getName() + "剩余" + decimalFormat.format(player.getHp()) + "点生命值.";
+        String message = "";
+        message += attacker.getJobName() + attacker.getName();
+        if (attacker.getJobName().equals(Job.solider) && attacker.getClass().equals(SoliderPlayer.class) &&
+                ((SoliderPlayer) attacker).getWeapon()!=null) {
+            message += "用" + ((SoliderPlayer) attacker).getWeapon().getName();
+        }
+        message += "攻击了" + player.getJobName() + player.getName() + ",对" +
+                player.getName() + "造成了" + decimalFormat.format(player.calculateHurt(attacker)) + "点伤害,"
+                + player.getName() + "剩余" + decimalFormat.format(player.getHp()) + "点生命值.";
+        return message;
     }
 
     public void showWinner(Player winner) {
