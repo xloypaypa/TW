@@ -41,13 +41,18 @@ public class NormalPlayer implements Player {
 
     @Override
     public void beAttacked(Player player) {
-        this.hp -= calculateHurt(player);
+        changeHp(-calculateHurt(player));
         gameLog.afterPlayerBeAttacked(this, player);
     }
 
     @Override
     public float calculateHurt(Player player) {
         return player.getAttack();
+    }
+
+    @Override
+    public void changeHp(float value) {
+        this.hp += value;
     }
 
     @Override

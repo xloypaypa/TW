@@ -17,6 +17,8 @@ public interface Player extends AttackAble, Job {
 
     float calculateHurt(Player player);
 
+    void changeHp(float value);
+
     boolean isAlive();
 
 }
