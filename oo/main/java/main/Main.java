@@ -1,7 +1,7 @@
 package main;
 
 import logic.Game;
-import logic.Human;
+import logic.Normal;
 
 /**
  * Created by xlo on 15/11/28.
@@ -10,13 +10,10 @@ import logic.Human;
 public class Main {
 
     public static void main(String[] args) {
-        Game game = new Game(new Human("李四", 1, 1), new Human("haha", 1000, 100));
-        while (true) {
+        Game game = new Game(new Normal("李四", 100, 10), new Normal("haha", 1000, 10));
+        while (!game.isEnd()) {
             String now = game.nextRound();
-            if (now!=null) {
-                System.out.println(now);
-                break;
-            }
+            System.out.println(now);
         }
     }
 }

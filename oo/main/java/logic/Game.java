@@ -1,7 +1,5 @@
 package logic;
 
-import java.text.DecimalFormat;
-
 /**
  * Created by xlo on 15/11/28.
  * it's the game
@@ -9,10 +7,12 @@ import java.text.DecimalFormat;
 public class Game {
 
     private int round;
-    private Human playerA, playerB;
+    private Player playerA, playerB;
+    private boolean isEnd;
 
-    public Game(Human playerA, Human playerB) {
+    public Game(Player playerA, Player playerB) {
         this.round = 0;
+        this.isEnd = false;
         this.playerA = playerA;
         this.playerB = playerB;
     }
@@ -26,17 +26,17 @@ public class Game {
         }
     }
 
-    private String nowRound(Human from, Human to) {
-        from.decHp(to.getAttack());
-        DecimalFormat decimalFormat = new DecimalFormat("0");
-        System.out.printf("%s攻击了%s,%s受到了%s点伤害,%s剩余%s%n"
-                , to.getName(), from.getName(), from.getName(),
-                decimalFormat.format(to.getAttack()), from.getName(),
-                decimalFormat.format(from.getHp()));
-        if (from.isDie()) {
-            return from.getName() + "被打败了";
+    public boolean isEnd() {
+        return isEnd;
+    }
+
+    private String nowRound(Player beAttack, Player attacker) {
+        String message = beAttack.beAttack(attacker);
+        if (beAttack.isDie()) {
+            this.isEnd = true;
+            return String.format("%s%n%s被打败了", message, beAttack.getName());
         }
-        return null;
+        return message;
     }
 
 }
