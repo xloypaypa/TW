@@ -1,4 +1,4 @@
-package logic;
+package logic.playerOld;
 
 /**
  * Created by xlo on 15/11/28.
