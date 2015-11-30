@@ -8,4 +8,6 @@ public interface ContinueBuff extends Buff {
 
     int remainRound();
 
+    void effected();
+
 }
