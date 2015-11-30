@@ -10,4 +10,6 @@ public interface ContinueBuff extends Buff {
 
     void effected();
 
+    void addRound(int round);
+
 }

@@ -21,4 +21,9 @@ public abstract class AbstractContinueBuff implements ContinueBuff {
     public void effected() {
         this.round--;
     }
+
+    @Override
+    public void addRound(int round) {
+        this.round += round;
+    }
 }
