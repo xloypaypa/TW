@@ -1,5 +1,6 @@
 package logic.buff;
 
+import logic.attribute.AttributeType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,9 +14,9 @@ public class BuffPackageTest {
     @Test
     public void should_have_20_effect_when_add_two_10_effect_buff() {
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addBuff(() -> 10);
-        buffPackage.addBuff(() -> 10);
-        assertEquals(20, buffPackage.getEffect(), 1e-3);
+        buffPackage.addBuff(new NormalAttackBuff(10));
+        buffPackage.addBuff(new NormalAttackBuff(10));
+        assertEquals(20, buffPackage.getEffect().getAttribute(AttributeType.ATTACK), 1e-3);
     }
 
 }

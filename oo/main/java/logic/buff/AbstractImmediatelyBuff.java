@@ -11,9 +11,4 @@ public abstract class AbstractImmediatelyBuff implements ImmediatelyBuff {
     protected AbstractImmediatelyBuff(float effect) {
         this.effect = effect;
     }
-
-    @Override
-    public float getEffect() {
-        return this.effect;
-    }
 }

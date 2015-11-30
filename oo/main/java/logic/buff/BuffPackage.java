@@ -1,23 +1,25 @@
 package logic.buff;
 
+import logic.attribute.Attribute;
+
 /**
  * Created by xlo on 15/11/29.
  * it's the buff pack
  */
 public class BuffPackage implements Buff {
 
-    protected float effect;
+    protected Attribute attribute;
 
     public BuffPackage() {
-        this.effect = 0;
+        this.attribute = new Attribute();
     }
 
     public void addBuff(Buff buff) {
-        this.effect += buff.getEffect();
+        attribute.mergeAttribute(buff.getEffect());
     }
 
     @Override
-    public float getEffect() {
-        return this.effect;
+    public Attribute getEffect() {
+        return this.attribute;
     }
 }
