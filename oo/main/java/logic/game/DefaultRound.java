@@ -3,6 +3,7 @@ package logic.game;
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
+import logic.buff.ColdBuff;
 import logic.buff.ContinueBuff;
 import logic.log.GameLog;
 import logic.unit.player.Player;
@@ -18,6 +19,7 @@ public class DefaultRound extends Round {
 
     protected float[] defenderOldHp;
     protected GameLog gameLog;
+    protected BuffPackage buffPackage;
 
     public DefaultRound(Player attacker, Player[] defender, GameLog gameLog) {
         super(attacker, defender);
@@ -27,14 +29,22 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenRoundStart() {
-        //TODO show log
         RoundStatus roundStatus = RoundStatus.ACTION_START;
         List<ContinueBuff> continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.DIZZY);
-        //TODO cold buff
-        if (continueBuffs.size() != 0) {
-            continueBuffs.forEach(ContinueBuff::effected);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            gameLog.showDizzy(attacker.getName(), continueBuff.remainRound());
+            continueBuff.effected();
             roundStatus = RoundStatus.ROUND_END;
         }
+
+        continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.COLD);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            assert continueBuff instanceof ColdBuff;
+            if (((ColdBuff) continueBuff).isDizzy()) {
+                roundStatus = RoundStatus.ROUND_END;
+            }
+        }
+        continueBuffs.forEach(ContinueBuff::effected);
 
         for (Player now : defender) {
             calculateContinueHurt(now, AttributeType.FIRE);
@@ -44,15 +54,18 @@ public class DefaultRound extends Round {
     }
 
     protected void calculateContinueHurt(Player now, AttributeType attributeType) {
-        List<ContinueBuff> continueBuffs;Attribute attribute = new Attribute();
+        List<ContinueBuff> continueBuffs;
+        Attribute attribute = new Attribute();
         float sum = 0;
         continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
         for (ContinueBuff continueBuff : continueBuffs) {
             sum += continueBuff.getEffect().getAttribute(AttributeType.FIRE);
         }
-        attribute.setAttribute(AttributeType.HP, -sum);
-        //TODO show log
-        now.getAttribute().mergeAttribute(attribute);
+        if (sum > 0) {
+            attribute.setAttribute(AttributeType.HP, -sum);
+            now.getAttribute().mergeAttribute(attribute);
+            gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
+        }
     }
 
     @Override
@@ -70,7 +83,7 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenAction() {
-        BuffPackage buffPackage = attacker.getAttack();
+        buffPackage = attacker.getAttack();
         for (Player now : defender) {
             now.attachBuff(buffPackage);
         }
@@ -85,7 +98,8 @@ public class DefaultRound extends Round {
 
             gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
                     defenderOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
-                    now.getAttribute().getAttribute(AttributeType.HP), attacker);
+                    now.getAttribute().getAttribute(AttributeType.HP), attacker,
+                    buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0);
         }
         return RoundStatus.ROUND_END;
     }

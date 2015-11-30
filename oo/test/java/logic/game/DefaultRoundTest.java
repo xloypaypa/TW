@@ -45,6 +45,7 @@ public class DefaultRoundTest {
         when(playerA.getAttack()).thenReturn(buffPackage);
 
         DefaultRound defaultRound = new DefaultRound(playerA, new Player[]{playerB}, GameLog.getGameLog());
+        defaultRound.buffPackage = new BuffPackage();
 
         defaultRound.whenActionEnd();
 
@@ -80,6 +81,6 @@ public class DefaultRoundTest {
         defaultRound.whenAction();
         defaultRound.whenActionEnd();
 
-        verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA);
+        verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA, false);
     }
 }

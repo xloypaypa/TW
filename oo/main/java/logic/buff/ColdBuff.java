@@ -9,8 +9,21 @@ import logic.attribute.AttributeType;
  */
 public class ColdBuff extends AbstractContinueBuff {
 
+    protected int time;
+
     public ColdBuff(int round) {
         super(round);
+        this.time = 0;
+    }
+
+    @Override
+    public void effected() {
+        super.effected();
+        this.time++;
+    }
+
+    public boolean isDizzy() {
+        return time % 3 == 0;
     }
 
     @Override
