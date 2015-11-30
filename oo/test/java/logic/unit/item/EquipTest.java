@@ -13,7 +13,7 @@ public class EquipTest {
 
     @Test
     public void equip_with_10_defence_should_get_10_defence() {
-        assertEquals(10, new Equip("", 10).getDefence().getEffect().getAttribute(AttributeType.SAVE_HP), 1e-3);
+        assertEquals(10, new Equip("", 10).getDefence().getImmediatelyEffect().getAttribute(AttributeType.SAVE_HP), 1e-3);
     }
 
 }

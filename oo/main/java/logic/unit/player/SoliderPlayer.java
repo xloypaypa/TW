@@ -26,14 +26,13 @@ public class SoliderPlayer extends NormalPlayer {
     public BuffPackage getAttack() {
         BuffPackage buffPackage = super.getAttack();
         if (this.weapon != null) {
-            buffPackage.addImmediatelyBuff(this.weapon.getAttack());
+            buffPackage.addBuffPackage(this.weapon.getAttack());
         }
         return buffPackage;
     }
 
     public void setEquip(Equip equip) {
         this.equip = equip;
-        this.buffPackage.addForeverAttribute(equip.getDefence());
     }
 
     public void setWeapon(Weapon weapon) {

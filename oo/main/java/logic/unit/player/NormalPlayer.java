@@ -2,7 +2,6 @@ package logic.unit.player;
 
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
-import logic.buff.Buff;
 import logic.buff.BuffPackage;
 import logic.buff.NormalAttackBuff;
 import logic.job.DefaultJob;
@@ -43,13 +42,13 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public void attachBuff(Buff buff) {
-        this.buffPackage.addImmediatelyBuff(buff);
+    public void attachBuff(BuffPackage buffPackage) {
+        this.buffPackage.addBuffPackage(buffPackage);
     }
 
     @Override
     public void buffToAttribute() {
-        this.attribute.mergeAttribute(this.buffPackage.getEffect());
+        this.attribute.mergeAttribute(this.buffPackage.getImmediatelyEffect());
         this.buffPackage.clearImmediatelyBuff();
     }
 

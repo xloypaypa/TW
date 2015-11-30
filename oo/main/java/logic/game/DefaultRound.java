@@ -4,6 +4,7 @@ import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.log.GameLog;
 import logic.unit.player.Player;
+import logic.unit.player.SoliderPlayer;
 
 /**
  * Created by xlo on 15/11/30.
@@ -22,6 +23,11 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenRoundStart() {
+        for (Player now : defender) {
+            if (now instanceof SoliderPlayer && ((SoliderPlayer) now).getEquip() != null) {
+                now.attachBuff(((SoliderPlayer) now).getEquip().getDefence());
+            }
+        }
         return RoundStatus.ACTION_START;
     }
 

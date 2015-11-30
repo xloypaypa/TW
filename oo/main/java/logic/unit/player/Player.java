@@ -16,7 +16,7 @@ public interface Player extends AttackAble, Job {
 
     String getName();
 
-    void attachBuff(Buff buff);
+    void attachBuff(BuffPackage buffPackage);
 
     void buffToAttribute();
 

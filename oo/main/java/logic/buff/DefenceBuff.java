@@ -7,12 +7,10 @@ import logic.attribute.AttributeType;
  * Created by xlo on 15/11/30.
  * it's the defence buff
  */
-public class DefenceBuff implements ForeverBuff {
-
-    protected float effect;
+public class DefenceBuff extends AbstractImmediatelyBuff {
 
     public DefenceBuff(float effect) {
-        this.effect = effect;
+        super(effect);
     }
 
     @Override

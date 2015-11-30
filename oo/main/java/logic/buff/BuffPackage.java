@@ -11,55 +11,43 @@ import java.util.List;
  * Created by xlo on 15/11/29.
  * it's the buff pack
  */
-public class BuffPackage implements Buff {
+public class BuffPackage {
 
-    protected static final String NOT_CONTINUE_ERROR = "the buff not the continue buff";
-    protected Attribute immediatelyAttribute, foreverAttribute;
+    protected Attribute immediatelyAttribute;
 
     protected List<ContinueBuff> continueBuffs;
 
     public BuffPackage() {
         this.immediatelyAttribute = new Attribute();
-        this.foreverAttribute = new Attribute();
         this.continueBuffs = new LinkedList<>();
     }
 
-    public void addImmediatelyBuff(Buff buff) {
+    public void addImmediatelyBuff(ImmediatelyBuff buff) {
         immediatelyAttribute.mergeAttribute(buff.getEffect());
     }
 
-    public void addForeverAttribute(Buff buff) {
-        foreverAttribute.mergeAttribute(buff.getEffect());
-    }
-
-    public void addContinueAttribute(Buff buff) throws Exception {
-        if (buff instanceof ContinueBuff) {
-            for (ContinueBuff continueBuff : continueBuffs) {
-                if (continueBuff.getClass().equals(buff.getClass())) {
-                    continueBuff.addRound(((ContinueBuff) buff).remainRound());
-                    return;
-                }
+    public void addContinueBuff(ContinueBuff buff) {
+        for (ContinueBuff continueBuff : continueBuffs) {
+            if (continueBuff.getClass().equals(buff.getClass())) {
+                continueBuff.addRound(buff.remainRound());
+                return;
             }
-            this.continueBuffs.add((ContinueBuff) buff);
-        } else if (buff instanceof BuffPackage) {
-            for (ContinueBuff continueBuff : ((BuffPackage) buff).continueBuffs) {
-                addContinueAttribute(continueBuff);
-            }
-        } else {
-            throw new Exception(NOT_CONTINUE_ERROR);
         }
+        this.continueBuffs.add(buff);
     }
 
     public List<ContinueBuff> getContinueBuffs() {
         return continueBuffs;
     }
 
-    public void clearImmediatelyBuff() {
-        immediatelyAttribute = new Attribute();
+    public void addBuffPackage(BuffPackage buffPackage) {
+        ImmediatelyBuff immediatelyBuff =  () -> buffPackage.immediatelyAttribute;
+        buffPackage.continueBuffs.forEach(this::addContinueBuff);
+        addImmediatelyBuff(immediatelyBuff);
     }
 
-    public void clearForeverBuff() {
-        foreverAttribute = new Attribute();
+    public void clearImmediatelyBuff() {
+        immediatelyAttribute = new Attribute();
     }
 
     public void clearContinueBuff() {
@@ -72,11 +60,9 @@ public class BuffPackage implements Buff {
         }
     }
 
-    @Override
-    public Attribute getEffect() {
+    public Attribute getImmediatelyEffect() {
         Attribute attribute = new Attribute();
         attribute.mergeAttribute(this.immediatelyAttribute);
-        attribute.mergeAttribute(this.foreverAttribute);
         float hurt = -attribute.getAttribute(AttributeType.HP);
         if (hurt > 0) {
             hurt = Math.max(0, hurt - attribute.getAttribute(AttributeType.SAVE_HP));

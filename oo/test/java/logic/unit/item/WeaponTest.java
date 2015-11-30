@@ -14,7 +14,7 @@ public class WeaponTest {
     @Test
     public void testBuff() {
         Weapon weapon = new Weapon("a", 10);
-        assertEquals(-10, weapon.getAttack().getEffect().getAttribute(AttributeType.HP), 1e-3);
+        assertEquals(-10, weapon.getAttack().getImmediatelyEffect().getAttribute(AttributeType.HP), 1e-3);
     }
 
 }
