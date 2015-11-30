@@ -87,4 +87,27 @@ public class BuffPackageTest {
         assertEquals(1, buffPackage.getContinueBuffs().size());
     }
 
+    @Test
+    public void should_have_all_attribute_in_continue_buffs() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new FireBuff(1));
+        buffPackage.addContinueBuff(new FireBuff(1));
+        buffPackage.addContinueBuff(new ColdBuff(1));
+
+        assertEquals(1, buffPackage.getContinueEffect().getAttribute(AttributeType.COLD), 1e-3);
+        assertEquals(1, buffPackage.getContinueEffect().getAttribute(AttributeType.FIRE), 1e-3);
+    }
+
+    @Test
+    public void should_not_have_continue_buff_when_effect_all_and_clear() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new FireBuff(1));
+        buffPackage.addContinueBuff(new ColdBuff(1));
+
+        buffPackage.effectAllContinueBuff();
+        buffPackage.clearContinueBuff();
+
+        assertEquals(0, buffPackage.getContinueBuffs().size());
+    }
+
 }

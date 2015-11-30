@@ -41,8 +41,8 @@ public class BuffPackage {
     }
 
     public void addBuffPackage(BuffPackage buffPackage) {
-        ImmediatelyBuff immediatelyBuff =  () -> buffPackage.immediatelyAttribute;
         buffPackage.continueBuffs.forEach(this::addContinueBuff);
+        ImmediatelyBuff immediatelyBuff = () -> buffPackage.immediatelyAttribute;
         addImmediatelyBuff(immediatelyBuff);
     }
 
@@ -60,6 +60,18 @@ public class BuffPackage {
         }
     }
 
+    public Attribute getContinueEffect() {
+        Attribute attribute = new Attribute();
+        for (ContinueBuff continueBuff : continueBuffs) {
+            attribute.mergeAttribute(continueBuff.getEffect());
+        }
+        return attribute;
+    }
+
+    public void effectAllContinueBuff() {
+        continueBuffs.forEach(ContinueBuff::effected);
+    }
+
     public Attribute getImmediatelyEffect() {
         Attribute attribute = new Attribute();
         attribute.mergeAttribute(this.immediatelyAttribute);
@@ -67,6 +79,11 @@ public class BuffPackage {
         if (hurt > 0) {
             hurt = Math.max(0, hurt - attribute.getAttribute(AttributeType.SAVE_HP));
         }
+
+        if (attribute.getAttribute(AttributeType.LUCK) > 0) {
+            hurt *= 3;
+        }
+
         attribute.setAttribute(AttributeType.HP, -hurt);
         return attribute;
     }
