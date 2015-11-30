@@ -15,11 +15,7 @@ public abstract class Game {
         this.players = new Player[2];
     }
 
-    public void runOneRound() {
-        beforeRound();
-        whenRound();
-        afterRound();
-    }
+    public abstract void runOneRound();
 
     public Player[] getPlayers() {
         return players;
@@ -30,10 +26,4 @@ public abstract class Game {
     public abstract Player nowAttacker();
 
     public abstract Player[] playersBeAttack();
-
-    protected abstract void beforeRound();
-
-    protected abstract void whenRound();
-
-    protected abstract void afterRound();
 }

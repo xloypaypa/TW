@@ -18,6 +18,13 @@ public class DefaultGame extends Game {
     }
 
     @Override
+    public void runOneRound() {
+        Round round = new DefaultRound(this.nowAttacker, this.playersBeAttack());
+        round.startARound();
+        nowAttacker = playersBeAttack()[0];
+    }
+
+    @Override
     public Player getWinner() throws Exception {
         boolean haveWinner = false;
         for (Player player : players) {
@@ -54,23 +61,5 @@ public class DefaultGame extends Game {
             result[0] = players[0];
         }
         return result;
-    }
-
-    @Override
-    protected void beforeRound() {
-
-    }
-
-    @Override
-    protected void whenRound() {
-        Player[] playersBeAttack = playersBeAttack();
-        for (Player player : playersBeAttack) {
-            player.beAttacked(nowAttacker);
-        }
-    }
-
-    @Override
-    protected void afterRound() {
-        nowAttacker = playersBeAttack()[0];
     }
 }
