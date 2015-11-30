@@ -110,4 +110,32 @@ public class BuffPackageTest {
         assertEquals(0, buffPackage.getContinueBuffs().size());
     }
 
+    @Test
+    public void should_get_no_data_when_get_different_attribute() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new FireBuff(1, 1));
+
+        assertEquals(0, buffPackage.getContinueBuffsWith(AttributeType.COLD).size());
+    }
+
+    @Test
+    public void should_get_buff_when_get_same_attribute() {
+        BuffPackage buffPackage = new BuffPackage();
+        FireBuff buff = new FireBuff(1, 1);
+        buffPackage.addContinueBuff(buff);
+
+        assertEquals(buff, buffPackage.getContinueBuffsWith(AttributeType.FIRE).get(0));
+    }
+
+    @Test
+    public void should_only_get_buff_with_same_attribute() {
+        BuffPackage buffPackage = new BuffPackage();
+        FireBuff buff = new FireBuff(1, 1);
+        buffPackage.addContinueBuff(buff);
+        buffPackage.addContinueBuff(new ColdBuff(1));
+
+        assertEquals(1, buffPackage.getContinueBuffsWith(AttributeType.FIRE).size());
+        assertEquals(buff, buffPackage.getContinueBuffsWith(AttributeType.FIRE).get(0));
+    }
+
 }

@@ -6,6 +6,7 @@ import logic.attribute.AttributeType;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by xlo on 15/11/29.
@@ -38,6 +39,11 @@ public class BuffPackage {
 
     public List<ContinueBuff> getContinueBuffs() {
         return continueBuffs;
+    }
+
+    public List<ContinueBuff> getContinueBuffsWith(AttributeType attributeType) {
+        return continueBuffs.stream().filter(continueBuff -> continueBuff.getEffect().getAttribute(attributeType) != 0)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public void addBuffPackage(BuffPackage buffPackage) {

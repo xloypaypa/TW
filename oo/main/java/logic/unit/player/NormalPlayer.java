@@ -53,6 +53,11 @@ public class NormalPlayer implements Player {
     }
 
     @Override
+    public BuffPackage getBuff() {
+        return this.buffPackage;
+    }
+
+    @Override
     public boolean isAlive() {
         return this.attribute.getAttribute(AttributeType.HP) >= 0;
     }
