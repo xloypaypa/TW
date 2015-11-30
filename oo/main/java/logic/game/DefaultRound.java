@@ -1,10 +1,14 @@
 package logic.game;
 
+import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
+import logic.buff.ContinueBuff;
 import logic.log.GameLog;
 import logic.unit.player.Player;
 import logic.unit.player.SoliderPlayer;
+
+import java.util.List;
 
 /**
  * Created by xlo on 15/11/30.
@@ -23,7 +27,32 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenRoundStart() {
-        return RoundStatus.ACTION_START;
+        //TODO show log
+        RoundStatus roundStatus = RoundStatus.ACTION_START;
+        List<ContinueBuff> continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.DIZZY);
+        //TODO cold buff
+        if (continueBuffs.size() != 0) {
+            continueBuffs.forEach(ContinueBuff::effected);
+            roundStatus = RoundStatus.ROUND_END;
+        }
+
+        for (Player now : defender) {
+            calculateContinueHurt(now, AttributeType.FIRE);
+            calculateContinueHurt(now, AttributeType.POISONOUS);
+        }
+        return roundStatus;
+    }
+
+    protected void calculateContinueHurt(Player now, AttributeType attributeType) {
+        List<ContinueBuff> continueBuffs;Attribute attribute = new Attribute();
+        float sum = 0;
+        continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            sum += continueBuff.getEffect().getAttribute(AttributeType.FIRE);
+        }
+        attribute.setAttribute(AttributeType.HP, -sum);
+        //TODO show log
+        now.getAttribute().mergeAttribute(attribute);
     }
 
     @Override
