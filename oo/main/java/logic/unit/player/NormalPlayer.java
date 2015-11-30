@@ -47,7 +47,7 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public void buffToAttribute() {
+    public void immediatelyBuffToAttribute() {
         this.attribute.mergeAttribute(this.buffPackage.getImmediatelyEffect());
         this.buffPackage.clearImmediatelyBuff();
     }

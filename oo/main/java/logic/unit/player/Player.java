@@ -18,7 +18,7 @@ public interface Player extends AttackAble, Job {
 
     void attachBuff(BuffPackage buffPackage);
 
-    void buffToAttribute();
+    void immediatelyBuffToAttribute();
 
     boolean isAlive();
 

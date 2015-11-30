@@ -2,7 +2,7 @@ package logic.log;
 
 import logic.attribute.AttributeType;
 import logic.unit.item.Equip;
-import logic.unit.item.Weapon;
+import logic.unit.item.weapon.Weapon;
 import logic.unit.player.NormalPlayer;
 import logic.unit.player.SoliderPlayer;
 import org.junit.Test;

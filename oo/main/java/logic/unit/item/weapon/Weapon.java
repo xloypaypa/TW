@@ -1,4 +1,4 @@
-package logic.unit.item;
+package logic.unit.item.weapon;
 
 import logic.buff.BuffPackage;
 import logic.buff.NormalAttackBuff;

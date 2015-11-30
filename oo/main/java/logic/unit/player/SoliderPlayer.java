@@ -5,7 +5,7 @@ import logic.job.DefaultJob;
 import logic.job.JobType;
 import logic.log.GameLog;
 import logic.unit.item.Equip;
-import logic.unit.item.Weapon;
+import logic.unit.item.weapon.Weapon;
 
 /**
  * Created by xlo on 15/11/29.

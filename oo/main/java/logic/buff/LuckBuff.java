@@ -9,8 +9,8 @@ import logic.attribute.AttributeType;
  */
 public class LuckBuff extends AbstractImmediatelyBuff {
 
-    public LuckBuff() {
-        super(3);
+    public LuckBuff(int effect) {
+        super(effect);
     }
 
     @Override

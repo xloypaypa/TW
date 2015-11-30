@@ -9,14 +9,17 @@ import logic.attribute.AttributeType;
  */
 public class PoisonousBuff extends AbstractContinueBuff {
 
-    public PoisonousBuff(int round) {
+    protected float effect;
+
+    public PoisonousBuff(int round, float effect) {
         super(round);
+        this.effect = effect;
     }
 
     @Override
     public Attribute getEffect() {
         Attribute attribute = new Attribute();
-        attribute.setAttribute(AttributeType.POISONOUS, 1);
+        attribute.setAttribute(AttributeType.POISONOUS, effect);
         return attribute;
     }
 }

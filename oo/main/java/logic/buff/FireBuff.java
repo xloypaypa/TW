@@ -9,14 +9,17 @@ import logic.attribute.AttributeType;
  */
 public class FireBuff extends AbstractContinueBuff {
 
-    public FireBuff(int round) {
+    protected float effect;
+
+    public FireBuff(int round, float effect) {
         super(round);
+        this.effect = effect;
     }
 
     @Override
     public Attribute getEffect() {
         Attribute attribute = new Attribute();
-        attribute.setAttribute(AttributeType.FIRE, 1);
+        attribute.setAttribute(AttributeType.FIRE, effect);
         return attribute;
     }
 }

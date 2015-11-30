@@ -1,6 +1,7 @@
 package logic.unit.item;
 
 import logic.attribute.AttributeType;
+import logic.unit.item.weapon.Weapon;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

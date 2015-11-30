@@ -2,7 +2,7 @@ package logic.unit.player;
 
 import logic.attribute.AttributeType;
 import logic.log.GameLog;
-import logic.unit.item.Weapon;
+import logic.unit.item.weapon.Weapon;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

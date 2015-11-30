@@ -48,7 +48,7 @@ public class DefaultRoundTest {
 
         defaultRound.whenActionEnd();
 
-        verify(playerB).buffToAttribute();
+        verify(playerB).immediatelyBuffToAttribute();
     }
 
     @Test

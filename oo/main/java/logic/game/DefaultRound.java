@@ -23,16 +23,16 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenRoundStart() {
-        for (Player now : defender) {
-            if (now instanceof SoliderPlayer && ((SoliderPlayer) now).getEquip() != null) {
-                now.attachBuff(((SoliderPlayer) now).getEquip().getDefence());
-            }
-        }
         return RoundStatus.ACTION_START;
     }
 
     @Override
     protected RoundStatus whenActionStart() {
+        for (Player now : defender) {
+            if (now instanceof SoliderPlayer && ((SoliderPlayer) now).getEquip() != null) {
+                now.attachBuff(((SoliderPlayer) now).getEquip().getDefence());
+            }
+        }
         for (int i = 0; i < defenderOldHp.length; i++) {
             defenderOldHp[i] = defender[i].getAttribute().getAttribute(AttributeType.HP);
         }
@@ -52,7 +52,7 @@ public class DefaultRound extends Round {
     protected RoundStatus whenActionEnd() {
         for (int i = 0; i < defender.length; i++) {
             Player now = defender[i];
-            now.buffToAttribute();
+            now.immediatelyBuffToAttribute();
 
             gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
                     defenderOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),

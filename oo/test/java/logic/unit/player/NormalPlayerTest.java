@@ -40,7 +40,7 @@ public class NormalPlayerTest {
     public void should_clear_immediately_buff_when_calculate_buff() {
         NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
         normalPlayer.buffPackage = spy(normalPlayer.buffPackage);
-        normalPlayer.buffToAttribute();
+        normalPlayer.immediatelyBuffToAttribute();
         verify(normalPlayer.buffPackage).clearImmediatelyBuff();
     }
 
