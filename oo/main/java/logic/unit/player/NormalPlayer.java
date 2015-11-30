@@ -1,9 +1,13 @@
 package logic.unit.player;
 
+import logic.attribute.Attribute;
+import logic.attribute.AttributeType;
+import logic.buff.Buff;
+import logic.buff.BuffPackage;
+import logic.buff.NormalAttackBuff;
 import logic.job.DefaultJob;
 import logic.job.Job;
 import logic.job.JobType;
-import logic.log.GameLog;
 
 /**
  * Created by xlo on 15/11/29.
@@ -12,26 +16,25 @@ import logic.log.GameLog;
 public class NormalPlayer implements Player {
 
     protected String name;
-    protected float hp, attack;
-    protected GameLog gameLog;
+    protected Attribute attribute;
+    protected BuffPackage buffPackage;
     protected Job job;
 
-    public NormalPlayer(String name, float hp, float attack, GameLog gameLog) {
+    public NormalPlayer(String name, float hp, float attack) {
         this.name = name;
+
+        this.attribute = new Attribute();
+        this.attribute.setAttribute(AttributeType.HP, hp);
+        this.attribute.setAttribute(AttributeType.ATTACK, attack);
+
         this.job = new DefaultJob(JobType.NORMAL);
-        this.hp = hp;
-        this.attack = attack;
-        this.gameLog = gameLog;
+
+        this.buffPackage = new BuffPackage();
     }
 
     @Override
-    public float getAttack() {
-        return this.attack;
-    }
-
-    @Override
-    public float getHp() {
-        return this.hp;
+    public Attribute getAttribute() {
+        return this.attribute;
     }
 
     @Override
@@ -40,28 +43,30 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public void beAttacked(Player player) {
-        changeHp(-calculateHurt(player));
-        gameLog.afterPlayerBeAttacked(this, player);
+    public void attachBuff(Buff buff) {
+        this.buffPackage.addImmediatelyBuff(buff);
     }
 
     @Override
-    public float calculateHurt(Player player) {
-        return player.getAttack();
-    }
-
-    @Override
-    public void changeHp(float value) {
-        this.hp += value;
+    public void buffToAttribute() {
+        this.attribute.mergeAttribute(this.buffPackage.getEffect());
+        this.buffPackage.clearImmediatelyBuff();
     }
 
     @Override
     public boolean isAlive() {
-        return this.hp >= 0;
+        return this.attribute.getAttribute(AttributeType.HP) >= 0;
     }
 
     @Override
     public String getJobName() {
         return this.job.getJobName();
+    }
+
+    @Override
+    public BuffPackage getAttack() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addImmediatelyBuff(new NormalAttackBuff(this.attribute.getAttribute(AttributeType.ATTACK)));
+        return buffPackage;
     }
 }

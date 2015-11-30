@@ -1,5 +1,8 @@
 package logic.unit.player;
 
+import logic.attribute.Attribute;
+import logic.buff.Buff;
+import logic.buff.BuffPackage;
 import logic.job.Job;
 import logic.unit.AttackAble;
 
@@ -9,15 +12,13 @@ import logic.unit.AttackAble;
  */
 public interface Player extends AttackAble, Job {
 
-    float getHp();
+    Attribute getAttribute();
 
     String getName();
 
-    void beAttacked(Player player);
+    void attachBuff(Buff buff);
 
-    float calculateHurt(Player player);
-
-    void changeHp(float value);
+    void buffToAttribute();
 
     boolean isAlive();
 

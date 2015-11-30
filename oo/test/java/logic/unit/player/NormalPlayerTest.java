@@ -1,7 +1,6 @@
 package logic.unit.player;
 
 import logic.job.Job;
-import logic.log.GameLog;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,40 +15,33 @@ public class NormalPlayerTest {
 
     @Test
     public void normal_player_job_should_be_normal() {
-        assertEquals(Job.normal, new NormalPlayer("a", 10, 10, GameLog.getGameLog()).getJobName());
-    }
-
-    @Test
-    public void should_a_normal_player_who_have_100_hp_remain_90_hp_when_be_attacked_by_item_who_have_10_attack_unit() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 100, 100, GameLog.getGameLog());
-        normalPlayer.beAttacked(new NormalPlayer("", 10, 10, GameLog.getGameLog()));
-        assertEquals(90, normalPlayer.getHp(), 1e-3);
+        assertEquals(Job.normal, new NormalPlayer("a", 10, 10).getJobName());
     }
 
     @Test
     public void should_alive_when_normal_player_have_10_hp() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 10, 10, GameLog.getGameLog());
+        NormalPlayer normalPlayer = new NormalPlayer("abc", 10, 10);
         assertTrue(normalPlayer.isAlive());
     }
 
     @Test
     public void should_alive_when_normal_player_have_0_hp() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 0, 0, GameLog.getGameLog());
+        NormalPlayer normalPlayer = new NormalPlayer("abc", 0, 0);
         assertTrue(normalPlayer.isAlive());
     }
 
     @Test
     public void should_not_alive_when_normal_player_have_hp_less_than_zero() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", -1, -1, GameLog.getGameLog());
+        NormalPlayer normalPlayer = new NormalPlayer("abc", -1, -1);
         assertFalse(normalPlayer.isAlive());
     }
 
     @Test
-    public void should_write_log_when_be_attack() {
-        GameLog gameLog = spy(GameLog.getGameLog());
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 100, 100, gameLog);
-        Player player = new NormalPlayer("", 10, 10, GameLog.getGameLog());
-        normalPlayer.beAttacked(player);
-        verify(gameLog).afterPlayerBeAttacked(normalPlayer, player);
+    public void should_clear_immediately_buff_when_calculate_buff() {
+        NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
+        normalPlayer.buffPackage = spy(normalPlayer.buffPackage);
+        normalPlayer.buffToAttribute();
+        verify(normalPlayer.buffPackage).clearImmediatelyBuff();
     }
+
 }

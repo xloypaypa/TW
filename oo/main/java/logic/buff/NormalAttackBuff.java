@@ -16,7 +16,7 @@ public class NormalAttackBuff extends AbstractImmediatelyBuff {
     @Override
     public Attribute getEffect() {
         Attribute attribute = new Attribute();
-        attribute.setAttribute(AttributeType.ATTACK, effect);
+        attribute.setAttribute(AttributeType.HP, -effect);
         return attribute;
     }
 }

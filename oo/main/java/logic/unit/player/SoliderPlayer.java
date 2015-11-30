@@ -1,5 +1,6 @@
 package logic.unit.player;
 
+import logic.buff.BuffPackage;
 import logic.job.DefaultJob;
 import logic.job.JobType;
 import logic.log.GameLog;
@@ -16,32 +17,23 @@ public class SoliderPlayer extends NormalPlayer {
     protected Equip equip;
 
     public SoliderPlayer(String name, float hp, float attack, GameLog gameLog) {
-        super(name, hp, attack, gameLog);
+        super(name, hp, attack);
         //FIXME job 不应该被初始化两边吧?
         this.job = new DefaultJob(JobType.SOLIDER);
     }
 
-
     @Override
-    public float calculateHurt(Player player) {
-        if (this.equip != null) {
-            return equip.hurtingAfterDefence(player);
-        } else {
-            return super.calculateHurt(player);
+    public BuffPackage getAttack() {
+        BuffPackage buffPackage = super.getAttack();
+        if (this.weapon != null) {
+            buffPackage.addImmediatelyBuff(this.weapon.getAttack());
         }
-    }
-
-    @Override
-    public float getAttack() {
-        float result = super.getAttack();
-        if (weapon != null) {
-            result += weapon.getAttack();
-        }
-        return result;
+        return buffPackage;
     }
 
     public void setEquip(Equip equip) {
         this.equip = equip;
+        this.buffPackage.addForeverAttribute(equip.getDefence());
     }
 
     public void setWeapon(Weapon weapon) {

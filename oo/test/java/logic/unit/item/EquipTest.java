@@ -1,5 +1,6 @@
 package logic.unit.item;
 
+import logic.attribute.AttributeType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,13 +12,8 @@ import static org.junit.Assert.*;
 public class EquipTest {
 
     @Test
-    public void equip_with_10_defence_should_get_10_hurting_when_attack_by_20_attack() {
-        assertEquals(10, new Equip("", 10).hurtingAfterDefence(() -> 20), 1e-3);
-    }
-
-    @Test
-    public void equip_with_100_defence_should_get_0_hurting_when_attack_by_20_attack() {
-        assertEquals(0, new Equip("", 100).hurtingAfterDefence(() -> 20), 1e-3);
+    public void equip_with_10_defence_should_get_10_defence() {
+        assertEquals(10, new Equip("", 10).getDefence().getEffect().getAttribute(AttributeType.SAVE_HP), 1e-3);
     }
 
 }

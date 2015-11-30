@@ -29,21 +29,26 @@ public class GameLog {
         return gameLog;
     }
 
-    public void afterPlayerBeAttacked(Player player, Player attacker) {
-        System.out.println(buildAttackMessage(player, attacker));
+    public void afterPlayerBeAttacked(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker) {
+        System.out.println(buildAttackMessage(playerName, playerJobName, hurt, playerHpRemain, attacker));
     }
 
-    protected String buildAttackMessage(Player player, Player attacker) {
+    protected String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker) {
         DecimalFormat decimalFormat = new DecimalFormat("0");
         String message = "";
-        message += attacker.getJobName() + attacker.getName();
-        if (attacker.getJobName().equals(Job.solider) && attacker.getClass().equals(SoliderPlayer.class) &&
+
+        String attackerJobName = attacker.getJobName();
+        String attackerTitle = attackerJobName + attacker.getName();
+
+        message += attackerTitle;
+        if (attackerJobName.equals(Job.solider) && attacker.getClass().equals(SoliderPlayer.class) &&
                 ((SoliderPlayer) attacker).getWeapon()!=null) {
             message += "用" + ((SoliderPlayer) attacker).getWeapon().getName();
         }
-        message += "攻击了" + player.getJobName() + player.getName() + ",对" +
-                player.getName() + "造成了" + decimalFormat.format(player.calculateHurt(attacker)) + "点伤害,"
-                + player.getName() + "剩余" + decimalFormat.format(player.getHp()) + "点生命值.";
+        message += "攻击了" + playerJobName + playerName + ",对"
+                + playerName + "造成了" + decimalFormat.format(hurt) + "点伤害,"
+                + playerName + "剩余"
+                + decimalFormat.format(playerHpRemain) + "点生命值.";
         return message;
     }
 

@@ -12,11 +12,12 @@ import static org.junit.Assert.*;
 public class BuffPackageTest {
 
     @Test
-    public void should_have_20_effect_when_add_two_10_effect_buff() {
+    public void should_have_10_attack_when_have_20_attack_and_10_defence_before() {
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addBuff(new NormalAttackBuff(10));
-        buffPackage.addBuff(new NormalAttackBuff(10));
-        assertEquals(20, buffPackage.getEffect().getAttribute(AttributeType.ATTACK), 1e-3);
+        buffPackage.addImmediatelyBuff(new NormalAttackBuff(10));
+        buffPackage.addImmediatelyBuff(new NormalAttackBuff(10));
+        buffPackage.addImmediatelyBuff(new DefenceBuff(10));
+        assertEquals(-10, buffPackage.getEffect().getAttribute(AttributeType.HP), 1e-3);
     }
 
 }

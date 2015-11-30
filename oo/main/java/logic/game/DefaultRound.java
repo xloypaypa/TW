@@ -1,5 +1,8 @@
 package logic.game;
 
+import logic.attribute.AttributeType;
+import logic.buff.BuffPackage;
+import logic.log.GameLog;
 import logic.unit.player.Player;
 
 /**
@@ -8,8 +11,13 @@ import logic.unit.player.Player;
  */
 public class DefaultRound extends Round {
 
-    public DefaultRound(Player attacker, Player[] defender) {
+    protected float[] defenderOldHp;
+    protected GameLog gameLog;
+
+    public DefaultRound(Player attacker, Player[] defender, GameLog gameLog) {
         super(attacker, defender);
+        this.defenderOldHp = new float[defender.length];
+        this.gameLog = gameLog;
     }
 
     @Override
@@ -19,19 +27,31 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenActionStart() {
+        for (int i = 0; i < defenderOldHp.length; i++) {
+            defenderOldHp[i] = defender[i].getAttribute().getAttribute(AttributeType.HP);
+        }
         return RoundStatus.ACTION;
     }
 
     @Override
     protected RoundStatus whenAction() {
+        BuffPackage buffPackage = attacker.getAttack();
         for (Player now : defender) {
-            now.beAttacked(attacker);
+            now.attachBuff(buffPackage);
         }
         return RoundStatus.ACTION_END;
     }
 
     @Override
     protected RoundStatus whenActionEnd() {
+        for (int i = 0; i < defender.length; i++) {
+            Player now = defender[i];
+            now.buffToAttribute();
+
+            gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
+                    defenderOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
+                    now.getAttribute().getAttribute(AttributeType.HP), attacker);
+        }
         return RoundStatus.ROUND_END;
     }
 

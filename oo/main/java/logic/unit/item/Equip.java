@@ -1,6 +1,7 @@
 package logic.unit.item;
 
-import logic.unit.AttackAble;
+import logic.buff.BuffPackage;
+import logic.buff.DefenceBuff;
 import logic.unit.DefenceAble;
 
 /**
@@ -18,7 +19,9 @@ public class Equip implements DefenceAble {
     }
 
     @Override
-    public float hurtingAfterDefence(AttackAble attackAble) {
-        return Math.max(0, attackAble.getAttack() - defence);
+    public BuffPackage getDefence() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addImmediatelyBuff(new DefenceBuff(defence));
+        return buffPackage;
     }
 }

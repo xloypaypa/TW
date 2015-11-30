@@ -18,7 +18,7 @@ public class Main {
         SoliderPlayer soliderPlayer = new SoliderPlayer("b", 100, 20, GameLog.getGameLog());
         soliderPlayer.setEquip(new Equip("a", 1));
         soliderPlayer.setWeapon(new Weapon("c", 2));
-        Game game = new DefaultGame(new NormalPlayer("a", 100, 10, GameLog.getGameLog()),
+        Game game = new DefaultGame(new NormalPlayer("a", 100, 10),
                 soliderPlayer);
         while (game.getWinner() == null) {
             game.runOneRound();

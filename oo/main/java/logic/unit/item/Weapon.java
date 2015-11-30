@@ -1,5 +1,7 @@
 package logic.unit.item;
 
+import logic.buff.BuffPackage;
+import logic.buff.NormalAttackBuff;
 import logic.unit.AttackAble;
 
 /**
@@ -17,8 +19,10 @@ public class Weapon implements AttackAble {
     }
 
     @Override
-    public float getAttack() {
-        return this.attack;
+    public BuffPackage getAttack() {
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addImmediatelyBuff(new NormalAttackBuff(attack));
+        return buffPackage;
     }
 
     public String getName() {
