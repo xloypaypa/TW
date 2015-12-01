@@ -1,11 +1,14 @@
 package logic.log;
 
 import logic.attribute.AttributeType;
+import logic.buff.BuffPackage;
+import logic.buff.ContinueBuff;
 import logic.job.Job;
 import logic.unit.player.Player;
 import logic.unit.player.SoliderPlayer;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by xlo on 15/11/29.
@@ -30,8 +33,8 @@ public class GameLog {
         return gameLog;
     }
 
-    public void afterPlayerBeAttacked(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, boolean isLucky) {
-        System.out.println(buildAttackMessage(playerName, playerJobName, hurt, playerHpRemain, attacker, isLucky));
+    public void afterPlayerBeAttacked(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
+        System.out.println(buildAttackMessage(playerName, playerJobName, hurt, playerHpRemain, attacker, buffPackage));
     }
 
     public void showWinner(Player winner) {
@@ -69,7 +72,8 @@ public class GameLog {
         return winner.getName() + "胜利了.";
     }
 
-    protected String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, boolean isLucky) {
+    protected String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
+        boolean isLucky = buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0;
         DecimalFormat decimalFormat = new DecimalFormat("0");
         String message = "";
 
@@ -78,16 +82,28 @@ public class GameLog {
 
         message += attackerTitle;
         if (attackerJobName.equals(Job.solider) && attacker.getClass().equals(SoliderPlayer.class) &&
-                ((SoliderPlayer) attacker).getWeapon() != null) {
-            message += "用" + ((SoliderPlayer) attacker).getWeapon().getName();
+                attacker.getWeapon() != null) {
+            message += "用" + attacker.getWeapon().getName();
         }
         message += "攻击了" + playerJobName + playerName;
         if (isLucky) {
             message += "," + attacker.getName() + "发动了全力一击";
         }
         message += ",对"
-                + playerName + "造成了" + decimalFormat.format(hurt) + "点伤害,"
-                + playerName + "剩余"
+                + playerName + "造成了" + decimalFormat.format(hurt) + "点伤害,";
+        List<ContinueBuff> continueBuffs = buffPackage.getContinueBuffs();
+        for (ContinueBuff now : continueBuffs) {
+            if (now.getEffect().getAttribute(AttributeType.FIRE) > 0) {
+                message += playerName + "热到了,";
+            } else if (now.getEffect().getAttribute(AttributeType.COLD) > 0) {
+                message += playerName + "冷到了,";
+            } else if (now.getEffect().getAttribute(AttributeType.POISONOUS) > 0) {
+                message += playerName + "中毒了,";
+            } else if (now.getEffect().getAttribute(AttributeType.DIZZY) > 0) {
+                message += playerName + "晕倒了,";
+            }
+        }
+        message += playerName + "剩余"
                 + decimalFormat.format(playerHpRemain) + "点生命值.";
         return message;
     }

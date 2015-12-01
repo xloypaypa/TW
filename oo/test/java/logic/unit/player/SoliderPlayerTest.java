@@ -2,7 +2,11 @@ package logic.unit.player;
 
 import logic.attribute.AttributeType;
 import logic.unit.item.weapon.Weapon;
+import logic.unit.item.weapon.impl.NormalDizzyWeapon;
+import logic.unit.item.weapon.impl.NormalLuckyWeapon;
 import org.junit.Test;
+
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +19,7 @@ public class SoliderPlayerTest {
     @Test
     public void should_have_more_attack_when_have_weapon() throws Exception {
         SoliderPlayer soliderPlayer = new SoliderPlayer("a", 100, 10);
-        soliderPlayer.setWeapon(new Weapon("a", 10));
+        soliderPlayer.setWeapon(new NormalDizzyWeapon(10, new Random()));
         assertEquals(-20, soliderPlayer.getAttack().getImmediatelyEffect().getAttribute(AttributeType.HP), 1e-3);
     }
 

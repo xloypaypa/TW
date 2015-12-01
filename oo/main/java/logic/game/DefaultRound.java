@@ -45,10 +45,12 @@ public class DefaultRound extends Round {
             }
         }
         continueBuffs.forEach(ContinueBuff::effected);
+        attacker.getBuff().clearContinueBuff();
 
         for (Player now : defender) {
             calculateContinueHurt(now, AttributeType.FIRE);
             calculateContinueHurt(now, AttributeType.POISONOUS);
+            now.getBuff().clearContinueBuff();
         }
         return roundStatus;
     }
@@ -83,8 +85,7 @@ public class DefaultRound extends Round {
 
             gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
                     defenderOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
-                    now.getAttribute().getAttribute(AttributeType.HP), attacker,
-                    buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0);
+                    now.getAttribute().getAttribute(AttributeType.HP), attacker, buffPackage);
         }
         return RoundStatus.ROUND_END;
     }

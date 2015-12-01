@@ -83,7 +83,7 @@ public class DefaultRoundTest {
         defaultRound.whenAction();
         defaultRound.whenActionEnd();
 
-        verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA, false);
+        verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA, buffPackage);
     }
 
     @Test

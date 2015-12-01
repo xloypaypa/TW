@@ -1,20 +1,20 @@
 package logic.unit.item.weapon.impl;
 
 import logic.buff.BuffPackage;
-import logic.buff.PoisonousBuff;
-import logic.unit.item.weapon.ShortWeapon;
+import logic.buff.FireBuff;
+import logic.unit.item.weapon.LongWeapon;
 
 import java.util.Random;
 
 /**
- * Created by xlo on 15/11/30.
- * it's the short weapon impl
+ * Created by xlo on 2015/12/1.
+ * it's the long fire weapon
  */
-public class ShortWeaponImpl extends ShortWeapon {
+public class LongFireWeapon extends LongWeapon {
     protected Random random;
 
-    public ShortWeaponImpl(float attack, Random random) {
-        super("short", attack);
+    public LongFireWeapon(float attack, Random random) {
+        super("long fire", attack);
         this.random = random;
     }
 
@@ -22,7 +22,7 @@ public class ShortWeaponImpl extends ShortWeapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 50) {
-            attack.addContinueBuff(new PoisonousBuff(3, 1));
+            attack.addContinueBuff(new FireBuff(9, 1));
         }
         return attack;
     }

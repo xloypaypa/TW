@@ -3,7 +3,7 @@ package logic.unit.player;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.job.Job;
-import logic.unit.item.weapon.impl.NormalWeaponImpl;
+import logic.unit.item.weapon.impl.NormalLuckyWeapon;
 import org.junit.Test;
 
 import java.util.Random;
@@ -53,7 +53,7 @@ public class NormalPlayerTest {
         NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
         Random random = mock(Random.class);
         when(random.nextInt()).thenReturn(100);
-        normalPlayer.setWeapon(new NormalWeaponImpl(1, random));
+        normalPlayer.setWeapon(new NormalLuckyWeapon(1, random));
         BuffPackage buffPackage = normalPlayer.getAttack();
         assertEquals(0, buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK), 1e-3);
     }
