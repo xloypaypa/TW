@@ -1,11 +1,15 @@
 package logic.unit.player;
 
+import logic.attribute.AttributeType;
+import logic.buff.BuffPackage;
 import logic.job.Job;
+import logic.unit.item.weapon.impl.NormalWeaponImpl;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by xlo on 15/11/29.
@@ -20,19 +24,19 @@ public class NormalPlayerTest {
 
     @Test
     public void should_alive_when_normal_player_have_10_hp() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 10, 10);
+        Player normalPlayer = new NormalPlayer("abc", 10, 10);
         assertTrue(normalPlayer.isAlive());
     }
 
     @Test
     public void should_alive_when_normal_player_have_0_hp() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", 0, 0);
+        Player normalPlayer = new NormalPlayer("abc", 0, 0);
         assertTrue(normalPlayer.isAlive());
     }
 
     @Test
     public void should_not_alive_when_normal_player_have_hp_less_than_zero() {
-        NormalPlayer normalPlayer = new NormalPlayer("abc", -1, -1);
+        Player normalPlayer = new NormalPlayer("abc", -1, -1);
         assertFalse(normalPlayer.isAlive());
     }
 
@@ -42,6 +46,16 @@ public class NormalPlayerTest {
         normalPlayer.buffPackage = spy(normalPlayer.buffPackage);
         normalPlayer.immediatelyBuffToAttribute();
         verify(normalPlayer.buffPackage).clearImmediatelyBuff();
+    }
+
+    @Test
+    public void should_only_get_direct_attack_of_weapon() throws Exception {
+        NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
+        Random random = mock(Random.class);
+        when(random.nextInt()).thenReturn(100);
+        normalPlayer.setWeapon(new NormalWeaponImpl(1, random));
+        BuffPackage buffPackage = normalPlayer.getAttack();
+        assertEquals(0, buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK), 1e-3);
     }
 
 }

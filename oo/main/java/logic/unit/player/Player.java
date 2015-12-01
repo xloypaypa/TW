@@ -5,12 +5,13 @@ import logic.buff.Buff;
 import logic.buff.BuffPackage;
 import logic.job.Job;
 import logic.unit.AttackAble;
+import logic.unit.Bag;
 
 /**
  * Created by xlo on 15/11/29.
  * it's the interface for player
  */
-public interface Player extends AttackAble, Job {
+public interface Player extends AttackAble, Job, Bag {
 
     Attribute getAttribute();
 

@@ -4,6 +4,7 @@ import logic.attribute.AttributeType;
 import logic.unit.item.Equip;
 import logic.unit.item.weapon.Weapon;
 import logic.unit.player.NormalPlayer;
+import logic.unit.player.Player;
 import logic.unit.player.SoliderPlayer;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class GameLogTest {
 
     @Test
     public void testBuildAttackMessage() throws Exception {
-        final NormalPlayer a = new NormalPlayer("a", 10, 10);
+        final Player a = new NormalPlayer("a", 10, 10);
         assertEquals("普通人b攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), new NormalPlayer("b", 10, 10), false));
@@ -25,9 +26,9 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithWeaponAttackMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10, GameLog.getGameLog());
+        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
         attacker.setWeapon(new Weapon("c", 0));
-        final NormalPlayer a = new NormalPlayer("a", 10, 10);
+        final Player a = new NormalPlayer("a", 10, 10);
         assertEquals("战士b用c攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, false));
@@ -35,7 +36,7 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithEquipAttackMessage() throws Exception {
-        SoliderPlayer soliderPlayer = new SoliderPlayer("b", 10, 10, GameLog.getGameLog());
+        SoliderPlayer soliderPlayer = new SoliderPlayer("b", 10, 10);
         soliderPlayer.setEquip(new Equip("c", 10));
         assertEquals("普通人a攻击了战士b,对b造成了0点伤害,b剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
@@ -44,8 +45,8 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithoutWeaponAttackMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10, GameLog.getGameLog());
-        final NormalPlayer a = new NormalPlayer("a", 10, 10);
+        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
+        final Player a = new NormalPlayer("a", 10, 10);
         assertEquals("战士b攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, false));
@@ -53,9 +54,9 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithWeaponAttackAndLuckyMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10, GameLog.getGameLog());
+        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
         attacker.setWeapon(new Weapon("c", 0));
-        final NormalPlayer a = new NormalPlayer("a", 10, 10);
+        final Player a = new NormalPlayer("a", 10, 10);
         assertEquals("战士b用c攻击了普通人a,b发动了全力一击,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, true));

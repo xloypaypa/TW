@@ -25,6 +25,10 @@ public class Weapon implements AttackAble {
         return buffPackage;
     }
 
+    public float getDirectAttack() {
+        return this.attack;
+    }
+
     public String getName() {
         return name;
     }

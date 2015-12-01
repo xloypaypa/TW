@@ -1,15 +1,17 @@
 package logic.game;
 
+import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
+import logic.buff.ColdBuff;
+import logic.buff.DizzyBuff;
+import logic.buff.FireBuff;
 import logic.log.GameLog;
 import logic.unit.player.NormalPlayer;
 import logic.unit.player.Player;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by xlo on 15/11/30.
@@ -19,8 +21,8 @@ public class DefaultRoundTest {
 
     @Test
     public void defender_should_be_attack_when_action() {
-        NormalPlayer playerA = new NormalPlayer("a", 100, 10);
-        NormalPlayer playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
         playerA = spy(playerA);
         playerB = spy(playerB);
 
@@ -36,8 +38,8 @@ public class DefaultRoundTest {
 
     @Test
     public void defender_should_clear_buff_when_action_end() {
-        NormalPlayer playerA = new NormalPlayer("a", 100, 10);
-        NormalPlayer playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
         playerA = spy(playerA);
         playerB = spy(playerB);
 
@@ -54,8 +56,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_save_players_hp_when_action_start() {
-        NormalPlayer playerA = new NormalPlayer("a", 100, 10);
-        NormalPlayer playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
 
         DefaultRound defaultRound = new DefaultRound(playerA, new Player[]{playerB}, GameLog.getGameLog());
 
@@ -66,8 +68,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_write_log_when_action_end() {
-        NormalPlayer playerA = new NormalPlayer("a", 100, 10);
-        NormalPlayer playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
         playerA = spy(playerA);
         playerB = spy(playerB);
 
@@ -82,5 +84,47 @@ public class DefaultRoundTest {
         defaultRound.whenActionEnd();
 
         verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA, false);
+    }
+
+    @Test
+    public void should_go_to_round_end_when_attacker_is_dizzy() {
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
+
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new DizzyBuff(3));
+        playerA.attachBuff(buffPackage);
+
+        DefaultRound defaultRound = spy(new DefaultRound(playerA, new Player[]{playerB}, GameLog.getGameLog()));
+        assertEquals(Round.RoundStatus.ROUND_END, defaultRound.whenRoundStart());
+    }
+
+    @Test
+    public void should_go_to_round_end_at_3rd_round_when_attacker_is_cold() {
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
+
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new ColdBuff(3));
+        playerA.attachBuff(buffPackage);
+
+        DefaultRound defaultRound = spy(new DefaultRound(playerA, new Player[]{playerB}, GameLog.getGameLog()));
+        assertEquals(Round.RoundStatus.ACTION_START, defaultRound.whenRoundStart());
+        assertEquals(Round.RoundStatus.ACTION_START, defaultRound.whenRoundStart());
+        assertEquals(Round.RoundStatus.ROUND_END, defaultRound.whenRoundStart());
+    }
+
+    @Test
+    public void should_get_hurt_when_round_start_if_have_fire_buff() {
+        Player playerA = new NormalPlayer("a", 100, 10);
+        Player playerB = new NormalPlayer("b", 100, 10);
+
+        BuffPackage buffPackage = new BuffPackage();
+        buffPackage.addContinueBuff(new FireBuff(3, 1));
+        playerB.attachBuff(buffPackage);
+
+        DefaultRound defaultRound = new DefaultRound(playerA, new Player[]{playerB}, GameLog.getGameLog());
+        defaultRound.whenRoundStart();
+        assertEquals(99, playerB.getAttribute().getAttribute(AttributeType.HP), 1e-3);
     }
 }

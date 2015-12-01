@@ -53,26 +53,11 @@ public class DefaultRound extends Round {
         return roundStatus;
     }
 
-    protected void calculateContinueHurt(Player now, AttributeType attributeType) {
-        List<ContinueBuff> continueBuffs;
-        Attribute attribute = new Attribute();
-        float sum = 0;
-        continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            sum += continueBuff.getEffect().getAttribute(AttributeType.FIRE);
-        }
-        if (sum > 0) {
-            attribute.setAttribute(AttributeType.HP, -sum);
-            now.getAttribute().mergeAttribute(attribute);
-            gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
-        }
-    }
-
     @Override
     protected RoundStatus whenActionStart() {
         for (Player now : defender) {
-            if (now instanceof SoliderPlayer && ((SoliderPlayer) now).getEquip() != null) {
-                now.attachBuff(((SoliderPlayer) now).getEquip().getDefence());
+            if (now instanceof SoliderPlayer && now.getEquip() != null) {
+                now.attachBuff(now.getEquip().getDefence());
             }
         }
         for (int i = 0; i < defenderOldHp.length; i++) {
@@ -107,5 +92,20 @@ public class DefaultRound extends Round {
     @Override
     protected RoundStatus whenRoundEnd() {
         return null;
+    }
+
+    protected void calculateContinueHurt(Player now, AttributeType attributeType) {
+        List<ContinueBuff> continueBuffs;
+        Attribute attribute = new Attribute();
+        float sum = 0;
+        continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            sum += continueBuff.getEffect().getAttribute(AttributeType.FIRE);
+        }
+        if (sum > 0) {
+            attribute.setAttribute(AttributeType.HP, -sum);
+            now.getAttribute().mergeAttribute(attribute);
+            gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
+        }
     }
 }

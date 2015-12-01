@@ -23,7 +23,7 @@ public class ColdBuff extends AbstractContinueBuff {
     }
 
     public boolean isDizzy() {
-        return time % 3 == 0;
+        return time % 3 == 2;
     }
 
     @Override

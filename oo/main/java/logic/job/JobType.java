@@ -6,5 +6,7 @@ package logic.job;
  */
 public enum JobType {
     SOLIDER,
+    KILLER,
+    KNIGHT,
     NORMAL
 }

@@ -11,4 +11,8 @@ public interface Job {
     String normal = "普通人";
 
     String solider = "战士";
+
+    String killer = "刺客";
+
+    String knight = "圣骑士";
 }
