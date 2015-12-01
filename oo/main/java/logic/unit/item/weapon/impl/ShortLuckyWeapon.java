@@ -13,7 +13,7 @@ import java.util.Random;
 public class ShortLuckyWeapon extends ShortWeapon {
     protected Random random;
 
-    protected ShortLuckyWeapon(float attack, Random random) {
+    public ShortLuckyWeapon(float attack, Random random) {
         super("short lucky", attack);
         this.random = random;
     }

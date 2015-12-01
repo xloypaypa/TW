@@ -16,10 +16,10 @@ public class DefaultJob implements Job {
     public String getJobName() {
         if (this.jobType.equals(JobType.SOLIDER)) {
             return Job.solider;
-        } else if (this.jobType.equals(JobType.KILLER)) {
-            return Job.killer;
-        } else if (this.jobType.equals(JobType.KNIGHT)) {
-            return Job.knight;
+        } else if (this.jobType.equals(JobType.STALKER)) {
+            return Job.stalker;
+        } else if (this.jobType.equals(JobType.PALADIN)) {
+            return Job.paladin;
         } else {
             return Job.normal;
         }

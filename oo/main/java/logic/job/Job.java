@@ -12,7 +12,7 @@ public interface Job {
 
     String solider = "战士";
 
-    String killer = "刺客";
+    String stalker = "刺客";
 
-    String knight = "圣骑士";
+    String paladin = "圣骑士";
 }
