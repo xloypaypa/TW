@@ -8,8 +8,8 @@ import logic.unit.player.Player;
  */
 public abstract class Round {
 
-    protected Player attacker;
-    protected Player[] defender;
+    protected final Player attacker;
+    protected final Player[] defender;
     private RoundStatus roundStatus;
 
     public Round(Player attacker, Player[] defender) {

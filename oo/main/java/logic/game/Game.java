@@ -9,9 +9,9 @@ import logic.unit.player.Player;
 public abstract class Game {
 
     public static final String ALL_PLAYER_DIE = "all player die";
-    protected Player[] players;
+    final Player[] players;
 
-    public Game() {
+    Game() {
         this.players = new Player[2];
     }
 

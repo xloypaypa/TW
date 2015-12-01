@@ -6,7 +6,7 @@ package logic.job;
  */
 public class DefaultJob implements Job {
 
-    protected JobType jobType;
+    private final JobType jobType;
 
     public DefaultJob(JobType jobType) {
         this.jobType = jobType;

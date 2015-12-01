@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
  */
 public class BuffPackage {
 
-    protected Attribute immediatelyAttribute;
+    private Attribute immediatelyAttribute;
 
-    protected List<ContinueBuff> continueBuffs;
+    private final List<ContinueBuff> continueBuffs;
 
     public BuffPackage() {
         this.immediatelyAttribute = new Attribute();

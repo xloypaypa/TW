@@ -16,18 +16,18 @@ import logic.unit.item.weapon.Weapon;
  */
 public class NormalPlayer implements Player {
 
-    protected String name;
-    protected Attribute attribute;
-    protected BuffPackage buffPackage;
-    protected Job job;
-    protected Weapon weapon;
-    protected Equip equip;
+    private final String name;
+    private final Attribute attribute;
+    BuffPackage buffPackage;
+    private final Job job;
+    private Weapon weapon;
+    private Equip equip;
 
     public NormalPlayer(String name, float hp, float attack) {
         this(name, hp, attack, JobType.NORMAL);
     }
 
-    protected NormalPlayer(String name, float hp, float attack, JobType jobType) {
+    NormalPlayer(String name, float hp, float attack, JobType jobType) {
         this.name = name;
 
         this.attribute = new Attribute();
@@ -103,7 +103,7 @@ public class NormalPlayer implements Player {
         return weapon;
     }
 
-    protected void getWeaponAttack(BuffPackage buffPackage) {
+    void getWeaponAttack(BuffPackage buffPackage) {
         if (this.getWeapon() != null) {
             BuffPackage weapon = new BuffPackage();
             weapon.addImmediatelyBuff(new NormalAttackBuff(this.getWeapon().getDirectAttack()));

@@ -10,8 +10,8 @@ import logic.unit.DefenceAble;
  */
 public class Equip implements DefenceAble {
 
-    protected String name;
-    protected float defence;
+    private final String name;
+    private final float defence;
 
     public Equip(String name, float defence) {
         this.defence = defence;

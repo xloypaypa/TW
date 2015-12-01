@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class DefaultRound extends Round {
 
-    protected float[] defenderOldHp;
-    protected GameLog gameLog;
-    protected BuffPackage buffPackage;
+    final float[] defenderOldHp;
+    private final GameLog gameLog;
+    BuffPackage buffPackage;
 
     public DefaultRound(Player attacker, Player[] defender, GameLog gameLog) {
         super(attacker, defender);
@@ -95,7 +95,7 @@ public class DefaultRound extends Round {
         return null;
     }
 
-    protected void calculateContinueHurt(Player now, AttributeType attributeType) {
+    private void calculateContinueHurt(Player now, AttributeType attributeType) {
         List<ContinueBuff> continueBuffs;
         Attribute attribute = new Attribute();
         float sum = 0;

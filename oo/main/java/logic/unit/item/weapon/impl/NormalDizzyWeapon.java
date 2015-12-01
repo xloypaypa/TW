@@ -11,7 +11,7 @@ import java.util.Random;
  * it's the normal dizzy
  */
 public class NormalDizzyWeapon extends NormalWeapon {
-    protected Random random;
+    private final Random random;
 
     public NormalDizzyWeapon(float attack, Random random) {
         super("normal dizzy", attack);

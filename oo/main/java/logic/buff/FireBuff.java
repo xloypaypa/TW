@@ -9,7 +9,7 @@ import logic.attribute.AttributeType;
  */
 public class FireBuff extends AbstractContinueBuff {
 
-    protected float effect;
+    private final float effect;
 
     public FireBuff(int round, float effect) {
         super(round);

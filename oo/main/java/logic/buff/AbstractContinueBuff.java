@@ -6,9 +6,9 @@ package logic.buff;
  */
 public abstract class AbstractContinueBuff implements ContinueBuff {
 
-    protected int round;
+    private int round;
 
-    public AbstractContinueBuff(int round) {
+    AbstractContinueBuff(int round) {
         this.round = round;
     }
 

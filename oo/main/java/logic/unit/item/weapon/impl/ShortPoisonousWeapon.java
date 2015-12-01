@@ -11,7 +11,7 @@ import java.util.Random;
  * it's the short weapon impl
  */
 public class ShortPoisonousWeapon extends ShortWeapon {
-    protected Random random;
+    private final Random random;
 
     public ShortPoisonousWeapon(float attack, Random random) {
         super("short poisonous", attack);

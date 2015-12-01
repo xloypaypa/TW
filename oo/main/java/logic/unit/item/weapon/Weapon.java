@@ -10,10 +10,10 @@ import logic.unit.AttackAble;
  */
 public class Weapon implements AttackAble {
 
-    protected String name;
-    protected float attack;
+    private final String name;
+    private final float attack;
 
-    public Weapon(String name, float attack) {
+    Weapon(String name, float attack) {
         this.name = name;
         this.attack = attack;
     }

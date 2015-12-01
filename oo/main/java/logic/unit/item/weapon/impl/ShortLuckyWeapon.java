@@ -11,7 +11,7 @@ import java.util.Random;
  * it's the lucky weapon
  */
 public class ShortLuckyWeapon extends ShortWeapon {
-    protected Random random;
+    private final Random random;
 
     public ShortLuckyWeapon(float attack, Random random) {
         super("short lucky", attack);

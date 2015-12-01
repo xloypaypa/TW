@@ -9,7 +9,7 @@ import logic.attribute.AttributeType;
  */
 public class ColdBuff extends AbstractContinueBuff {
 
-    protected int time;
+    private int time;
 
     public ColdBuff(int round) {
         super(round);

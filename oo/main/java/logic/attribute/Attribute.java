@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Attribute {
 
-    protected Map<AttributeType, Float> attribute;
+    private final Map<AttributeType, Float> attribute;
 
     public Attribute() {
         this.attribute = new HashMap<>();

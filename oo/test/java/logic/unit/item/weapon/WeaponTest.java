@@ -1,4 +1,4 @@
-package logic.unit.item;
+package logic.unit.item.weapon;
 
 import logic.attribute.AttributeType;
 import logic.unit.item.weapon.Weapon;

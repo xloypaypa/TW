@@ -49,7 +49,7 @@ public class GameLog {
         System.out.println(buildDizzyMessage(playerName, round));
     }
 
-    protected String buildContinueBuffHurtMessage(String playerName, AttributeType type, float value, float playerHpRemain) {
+    String buildContinueBuffHurtMessage(String playerName, AttributeType type, float value, float playerHpRemain) {
         String message = "";
         DecimalFormat decimalFormat = new DecimalFormat("0");
         message += playerName + "受到" + decimalFormat.format(value) + "点";
@@ -62,17 +62,17 @@ public class GameLog {
         return message;
     }
 
-    protected String buildDizzyMessage(String playerName, int round) {
+    String buildDizzyMessage(String playerName, int round) {
         String message = "";
         message += playerName + "晕倒了，无法攻击, 眩晕还剩：" + round + "轮";
         return message;
     }
 
-    protected String buildWinnerMessage(Player winner) {
+    String buildWinnerMessage(Player winner) {
         return winner.getName() + "胜利了.";
     }
 
-    protected String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
+    String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
         boolean isLucky = buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0;
         DecimalFormat decimalFormat = new DecimalFormat("0");
         String message = "";

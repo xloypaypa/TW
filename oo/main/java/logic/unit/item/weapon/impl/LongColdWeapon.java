@@ -11,7 +11,7 @@ import java.util.Random;
  * it's the long weapon
  */
 public class LongColdWeapon extends LongWeapon {
-    protected Random random;
+    private final Random random;
 
     public LongColdWeapon(float attack, Random random) {
         super("long cold", attack);

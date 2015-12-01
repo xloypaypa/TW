@@ -9,7 +9,7 @@ import logic.attribute.AttributeType;
  */
 public class PoisonousBuff extends AbstractContinueBuff {
 
-    protected float effect;
+    private final float effect;
 
     public PoisonousBuff(int round, float effect) {
         super(round);
