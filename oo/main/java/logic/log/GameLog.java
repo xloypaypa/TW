@@ -3,6 +3,7 @@ package logic.log;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.ContinueBuff;
+import logic.unit.player.ElderlyPlayer;
 import logic.unit.player.Player;
 
 import java.text.DecimalFormat;
@@ -70,6 +71,9 @@ public class GameLog {
     }
 
     String buildWinnerMessage(Player winner) {
+        if (winner instanceof ElderlyPlayer) {
+            return "不要总想搞个大新闻.";
+        }
         return winner.getName() + "胜利了.";
     }
 
