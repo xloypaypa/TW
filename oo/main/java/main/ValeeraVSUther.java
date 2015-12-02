@@ -29,6 +29,6 @@ public class ValeeraVSUther {
         while (game.getWinner() == null) {
             game.runOneRound();
         }
-        GameLog.getGameLog().showWinner(game.getWinner());
+        GameLog.getGameLog().showWinner(game);
     }
 }

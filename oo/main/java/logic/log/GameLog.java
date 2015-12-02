@@ -3,6 +3,7 @@ package logic.log;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.ContinueBuff;
+import logic.game.Game;
 import logic.unit.player.ElderlyPlayer;
 import logic.unit.player.Player;
 
@@ -36,8 +37,20 @@ public class GameLog {
         System.out.println(buildAttackMessage(playerName, playerJobName, hurt, playerHpRemain, attacker, buffPackage));
     }
 
-    public void showWinner(Player winner) {
-        System.out.println(buildWinnerMessage(winner));
+    public void showWinner(Game game) {
+        System.out.println(buildWinnerMessage(game));
+    }
+
+    String buildWinnerMessage(Game game) {
+        try {
+            Player winner = game.getWinner();
+            if (winner instanceof ElderlyPlayer) {
+                return "不要总想搞个大新闻.";
+            }
+            return winner.getName() + "胜利了.";
+        } catch (Exception e) {
+            return "平局.";
+        }
     }
 
     public void showContinueBuffHurt(String playerName, AttributeType type, float value, float playerHpRemain) {
@@ -68,13 +81,6 @@ public class GameLog {
         String message = "";
         message += playerName + "晕倒了，无法攻击, 眩晕还剩：" + round + "轮";
         return message;
-    }
-
-    String buildWinnerMessage(Player winner) {
-        if (winner instanceof ElderlyPlayer) {
-            return "不要总想搞个大新闻.";
-        }
-        return winner.getName() + "胜利了.";
     }
 
     String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {

@@ -4,6 +4,8 @@ import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.DizzyBuff;
 import logic.buff.LuckBuff;
+import logic.game.DefaultGame;
+import logic.game.Game;
 import logic.unit.item.Equip;
 import logic.unit.item.weapon.impl.LongFireWeapon;
 import logic.unit.item.weapon.impl.NormalLuckyWeapon;
@@ -107,6 +109,7 @@ public class GameLogTest {
 
     @Test
     public void testBuildWinnerMessage() throws Exception {
-        assertEquals("a胜利了.", GameLog.getGameLog().buildWinnerMessage(new NormalPlayer("a", 10, 10)));
+        Game game = new DefaultGame(new NormalPlayer("a", 1, 1), new NormalPlayer("b", -1, -1));
+        assertEquals("a胜利了.", GameLog.getGameLog().buildWinnerMessage(game));
     }
 }
