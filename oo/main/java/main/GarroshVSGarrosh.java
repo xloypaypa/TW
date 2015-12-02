@@ -18,12 +18,12 @@ public class GarroshVSGarrosh {
 
     public static void main(String[] args) throws Exception {
         SoliderPlayer playerA = new SoliderPlayer("Garrosh", 30, 0);
-        playerA.setEquip(new Equip("a", 4));
+        playerA.setEquip(new Equip("a", 1));
         playerA.setWeapon(new NormalLuckyWeapon(3, new Random()));
 
         SoliderPlayer playerB = new SoliderPlayer("Hellscream", 30, 0);
         playerB.setEquip(new Equip("a", 2));
-        playerB.setWeapon(new NormalDizzyWeapon(1, new Random()));
+        playerB.setWeapon(new NormalDizzyWeapon(2, new Random()));
 
         Game game = new DefaultGame(playerA, playerB);
         while (game.getWinner() == null) {

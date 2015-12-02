@@ -19,62 +19,47 @@ public class DefaultRound extends Round {
     final AttributeType[] buffsCalculateInRoundStart = {AttributeType.FIRE, AttributeType.POISONOUS,
             AttributeType.LIFE_EXPERIENCE, AttributeType.CONTINUE_ONE_SECOND};
 
-    final float[] defenderOldHp;
+    final float[] playerOldHp;
+    final boolean[] attacked;
     private final GameLog gameLog;
     BuffPackage buffPackage;
 
-    public DefaultRound(Player attacker, Player[] defender, GameLog gameLog) {
-        super(attacker, defender);
-        this.defenderOldHp = new float[defender.length];
+    public DefaultRound(Player[] players, GameLog gameLog) {
+        super(players);
+        this.playerOldHp = new float[players.length];
+        this.attacked = new boolean[players.length];
         this.gameLog = gameLog;
     }
 
     @Override
     protected RoundStatus whenRoundStart() {
-        RoundStatus roundStatus = RoundStatus.ACTION_START;
-        List<ContinueBuff> continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.DIZZY);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            gameLog.showDizzy(attacker.getName(), continueBuff.remainRound());
-            continueBuff.effected();
-            roundStatus = RoundStatus.ROUND_END;
-        }
-
-        continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.COLD);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            assert continueBuff instanceof ColdBuff;
-            if (((ColdBuff) continueBuff).isDizzy()) {
-                roundStatus = RoundStatus.ROUND_END;
-            }
-        }
-        continueBuffs.forEach(ContinueBuff::effected);
-        attacker.getBuff().clearContinueBuff();
-
-        for (Player now : defender) {
-            for (AttributeType attributeType : buffsCalculateInRoundStart) {
-                calculateContinueHurt(now, attributeType);
-            }
-            now.getBuff().clearContinueBuff();
-        }
-        return roundStatus;
+        calculateUserContinueBuff();
+        return RoundStatus.ACTION_START;
     }
 
     @Override
     protected RoundStatus whenActionStart() {
-        for (Player now : defender) {
-            if (now.getEquip() != null) {
-                now.attachBuff(now.getEquip().getDefence());
+        saveUserHp();
+
+        for (int i = 0; i < players.length; i++) {
+            if (!attacked[i]) {
+                attacked[i] = true;
+                attacker = players[i];
+                RoundStatus roundStatus =  checkAttackerIsOk(attacker);
+                addEquipEffect();
+                return roundStatus;
             }
         }
-        for (int i = 0; i < defenderOldHp.length; i++) {
-            defenderOldHp[i] = defender[i].getAttribute().getAttribute(AttributeType.HP);
-        }
-        return RoundStatus.ACTION;
+        return RoundStatus.ROUND_END;
     }
 
     @Override
     protected RoundStatus whenAction() {
         buffPackage = attacker.getAttack();
-        for (Player now : defender) {
+        for (Player now : players) {
+            if (now == attacker) {
+                continue;
+            }
             now.attachBuff(buffPackage);
         }
         return RoundStatus.ACTION_END;
@@ -82,20 +67,49 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenActionEnd() {
-        for (int i = 0; i < defender.length; i++) {
-            Player now = defender[i];
+        for (Player now : players) {
             now.immediatelyBuffToAttribute();
+        }
+        if (buffPackage == null) {
+            return RoundStatus.ACTION_START;
+        }
+        for (int i = 0; i < players.length; i++) {
+            Player now = players[i];
+            if (now == attacker && now.getAttribute().getAttribute(AttributeType.HP) == playerOldHp[i]) {
+                continue;
+            }
 
             gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
-                    defenderOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
+                    playerOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
                     now.getAttribute().getAttribute(AttributeType.HP), attacker, buffPackage);
         }
-        return RoundStatus.ROUND_END;
+        return checkDieEnd();
     }
 
     @Override
     protected RoundStatus whenRoundEnd() {
         return null;
+    }
+
+    private RoundStatus checkAttackerIsOk(Player attacker) {
+        RoundStatus roundStatus = RoundStatus.ACTION;
+        List<ContinueBuff> continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.DIZZY);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            gameLog.showDizzy(this.attacker.getName(), continueBuff.remainRound());
+            continueBuff.effected();
+            roundStatus = RoundStatus.ACTION_END;
+        }
+
+        continueBuffs = this.attacker.getBuff().getContinueBuffsWith(AttributeType.COLD);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            assert continueBuff instanceof ColdBuff;
+            if (((ColdBuff) continueBuff).isDizzy()) {
+                roundStatus = RoundStatus.ACTION_END;
+            }
+        }
+        continueBuffs.forEach(ContinueBuff::effected);
+        this.attacker.getBuff().clearContinueBuff();
+        return roundStatus;
     }
 
     private void calculateContinueHurt(Player now, AttributeType attributeType) {
@@ -111,5 +125,37 @@ public class DefaultRound extends Round {
             now.getAttribute().mergeAttribute(attribute);
             gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
         }
+    }
+
+    private void saveUserHp() {
+        for (int i = 0; i < playerOldHp.length; i++) {
+            playerOldHp[i] = players[i].getAttribute().getAttribute(AttributeType.HP);
+        }
+    }
+
+    private void calculateUserContinueBuff() {
+        for (Player now : players) {
+            for (AttributeType attributeType : buffsCalculateInRoundStart) {
+                calculateContinueHurt(now, attributeType);
+            }
+            now.getBuff().clearContinueBuff();
+        }
+    }
+
+    private void addEquipEffect() {
+        for (Player now : players) {
+            if (now.getEquip() != null) {
+                now.attachBuff(now.getEquip().getDefence());
+            }
+        }
+    }
+
+    private RoundStatus checkDieEnd() {
+        for (Player player : players) {
+            if (!player.isAlive()) {
+                return RoundStatus.ROUND_END;
+            }
+        }
+        return RoundStatus.ACTION_START;
     }
 }

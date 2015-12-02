@@ -13,15 +13,6 @@ import static org.junit.Assert.*;
 public class DefaultGameTest {
 
     @Test
-    public void should_playerA_be_the_actor_at_first() {
-        Player playerA = new NormalPlayer("a", 10, 10);
-        Player playerB = new NormalPlayer("b", 10, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        assertEquals(playerA, defaultGame.nowAttacker());
-    }
-
-    @Test
     public void game_should_have_winner_when_one_player_not_alive() throws Exception {
         Player playerA = new NormalPlayer("a", 5, 10);
         Player playerB = new NormalPlayer("b", 5, 10);
@@ -44,17 +35,6 @@ public class DefaultGameTest {
     }
 
     @Test
-    public void should_change_actor_when_one_round_end() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        defaultGame.runOneRound();
-
-        assertEquals(playerB, defaultGame.nowAttacker());
-    }
-
-    @Test
     public void should_error_when_all_player_die() {
         Player playerA = new NormalPlayer("a", -1, 10);
         Player playerB = new NormalPlayer("b", -1, 10);
@@ -66,43 +46,5 @@ public class DefaultGameTest {
         } catch (Exception e) {
             assertEquals(Game.ALL_PLAYER_DIE, e.getMessage());
         }
-    }
-
-    @Test
-    public void playerA_should_be_attacker_at_first_round() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        assertEquals(playerA, defaultGame.nowAttacker());
-    }
-
-    @Test
-    public void playerB_should_be_attacker_at_second_round_after_playerB_be_attacked() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        defaultGame.runOneRound();
-
-        assertEquals(playerB, defaultGame.nowAttacker());
-    }
-
-    @Test
-    public void should_only_have_one_player_be_attacked() {
-        Player playerA = new NormalPlayer("a", 10, 10);
-        Player playerB = new NormalPlayer("b", 10, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        assertEquals(1, defaultGame.playersBeAttack().length);
-    }
-
-    @Test
-    public void PlayerB_should_is_the_player_except_now_actor() {
-        Player playerA = new NormalPlayer("a", 10, 10);
-        Player playerB = new NormalPlayer("b", 10, 10);
-        DefaultGame defaultGame = new DefaultGame(playerA, playerB);
-
-        assertEquals(playerB, defaultGame.playersBeAttack()[0]);
     }
 }

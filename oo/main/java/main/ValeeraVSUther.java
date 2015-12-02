@@ -19,7 +19,7 @@ public class ValeeraVSUther {
 
     public static void main(String[] args) throws Exception {
         StalkerPlayer playerA = new StalkerPlayer("Valeera", 30, 0);
-        playerA.setWeapon(new ShortLuckyWeapon(2, new Random()));
+        playerA.setWeapon(new ShortLuckyWeapon(3, new Random()));
 
         PaladinPlayer playerB = new PaladinPlayer("Uther", 30, 1);
         playerB.setEquip(new Equip("a", 1));

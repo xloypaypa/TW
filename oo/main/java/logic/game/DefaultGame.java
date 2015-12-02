@@ -9,20 +9,16 @@ import logic.unit.player.Player;
  */
 public class DefaultGame extends Game {
 
-    private Player nowAttacker;
-
     public DefaultGame(Player playerA, Player playerB) {
         super();
         this.players[0] = playerA;
         this.players[1] = playerB;
-        this.nowAttacker = playerA;
     }
 
     @Override
     public void runOneRound() {
-        Round round = new DefaultRound(this.nowAttacker, this.playersBeAttack(), GameLog.getGameLog());
+        Round round = new DefaultRound(this.getPlayers(), GameLog.getGameLog());
         round.startARound();
-        nowAttacker = playersBeAttack()[0];
     }
 
     @Override
@@ -47,20 +43,5 @@ public class DefaultGame extends Game {
             }
         }
         throw new Exception(ALL_PLAYER_DIE);
-    }
-
-    @Override
-    public Player nowAttacker() {
-        return nowAttacker;
-    }
-
-    public Player[] playersBeAttack() {
-        Player[] result = new Player[1];
-        if (nowAttacker == players[0]) {
-            result[0] = players[1];
-        } else {
-            result[0] = players[0];
-        }
-        return result;
     }
 }

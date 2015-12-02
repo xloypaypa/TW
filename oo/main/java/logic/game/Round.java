@@ -8,13 +8,12 @@ import logic.unit.player.Player;
  */
 public abstract class Round {
 
-    protected final Player attacker;
-    protected final Player[] defender;
+    protected Player attacker;
+    protected final Player[] players;
     private RoundStatus roundStatus;
 
-    public Round(Player attacker, Player[] defender) {
-        this.attacker = attacker;
-        this.defender = defender;
+    public Round(Player[] players) {
+        this.players = players;
         roundStatus = RoundStatus.ROUND_START;
     }
 

@@ -22,8 +22,4 @@ public abstract class Game {
     }
 
     public abstract Player getWinner() throws Exception;
-
-    public abstract Player nowAttacker();
-
-    public abstract Player[] playersBeAttack();
 }

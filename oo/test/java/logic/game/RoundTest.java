@@ -18,7 +18,7 @@ public class RoundTest {
 
     @Before
     public void setUp() {
-        this.round = spy(new Round(null, null) {
+        this.round = spy(new Round(null) {
             @Override
             protected Round.RoundStatus whenRoundStart() {
                 return RoundStatus.ACTION_START;
