@@ -15,4 +15,6 @@ public interface Job {
     String stalker = "刺客";
 
     String paladin = "圣骑士";
+
+    String elderly = "长者";
 }

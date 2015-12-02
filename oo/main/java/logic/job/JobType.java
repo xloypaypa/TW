@@ -8,5 +8,6 @@ public enum JobType {
     SOLIDER,
     STALKER,
     PALADIN,
-    NORMAL
+    NORMAL,
+    ELDERLY
 }

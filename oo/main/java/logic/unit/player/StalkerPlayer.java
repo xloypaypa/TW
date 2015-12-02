@@ -25,6 +25,7 @@ public class StalkerPlayer extends NormalPlayer{
 
     @Override
     protected void getWeaponAttack(BuffPackage buffPackage) {
+        if (this.getWeapon() == null) return;
         if (this.getWeapon() instanceof ShortWeapon) {
             buffPackage.addBuffPackage(this.getWeapon().getAttack());
         } else {

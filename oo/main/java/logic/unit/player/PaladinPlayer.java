@@ -25,6 +25,7 @@ public class PaladinPlayer extends NormalPlayer {
 
     @Override
     protected void getWeaponAttack(BuffPackage buffPackage) {
+        if (this.getWeapon() == null) return;
         if (this.getWeapon() instanceof LongWeapon) {
             buffPackage.addBuffPackage(this.getWeapon().getAttack());
         } else {

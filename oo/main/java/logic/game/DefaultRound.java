@@ -50,6 +50,8 @@ public class DefaultRound extends Round {
         for (Player now : defender) {
             calculateContinueHurt(now, AttributeType.FIRE);
             calculateContinueHurt(now, AttributeType.POISONOUS);
+            calculateContinueHurt(now, AttributeType.LIFE_EXPERIENCE);
+            calculateContinueHurt(now, AttributeType.CONTINUE_ONE_SECOND);
             now.getBuff().clearContinueBuff();
         }
         return roundStatus;
@@ -101,9 +103,9 @@ public class DefaultRound extends Round {
         float sum = 0;
         continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
         for (ContinueBuff continueBuff : continueBuffs) {
-            sum += continueBuff.getEffect().getAttribute(AttributeType.FIRE);
+            sum += continueBuff.getEffect().getAttribute(attributeType);
         }
-        if (sum > 0) {
+        if (sum != 0) {
             attribute.setAttribute(AttributeType.HP, -sum);
             now.getAttribute().mergeAttribute(attribute);
             gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));

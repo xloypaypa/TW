@@ -5,10 +5,9 @@ import logic.buff.BuffPackage;
 import logic.buff.DizzyBuff;
 import logic.buff.LuckBuff;
 import logic.unit.item.Equip;
+import logic.unit.item.weapon.impl.LongFireWeapon;
 import logic.unit.item.weapon.impl.NormalLuckyWeapon;
-import logic.unit.player.NormalPlayer;
-import logic.unit.player.Player;
-import logic.unit.player.SoliderPlayer;
+import logic.unit.player.*;
 import org.junit.Test;
 
 import java.util.Random;
@@ -48,6 +47,16 @@ public class GameLogTest {
                         soliderPlayer.getName(), soliderPlayer.getJobName(), 0,
                         soliderPlayer.getAttribute().getAttribute(AttributeType.HP), new NormalPlayer("a", 10, 10),
                         new BuffPackage()));
+    }
+
+    @Test
+    public void should_every_job_can_use_weapon() throws Exception {
+        PaladinPlayer attacker = new PaladinPlayer("b", 10, 10);
+        attacker.setWeapon(new LongFireWeapon(0, new Random()));
+        final Player a = new NormalPlayer("a", 10, 10);
+        assertEquals("圣骑士b用long fire攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
+                GameLog.getGameLog().buildAttackMessage(
+                        a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, new BuffPackage()));
     }
 
     @Test

@@ -25,6 +25,7 @@ public class SoliderPlayer extends NormalPlayer {
 
     @Override
     protected void getWeaponAttack(BuffPackage buffPackage) {
+        if (this.getWeapon() == null) return;
         if (this.getWeapon() instanceof NormalWeapon) {
             buffPackage.addBuffPackage(this.getWeapon().getAttack());
         } else {

@@ -3,9 +3,7 @@ package logic.log;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.ContinueBuff;
-import logic.job.Job;
 import logic.unit.player.Player;
-import logic.unit.player.SoliderPlayer;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -52,13 +50,16 @@ public class GameLog {
     String buildContinueBuffHurtMessage(String playerName, AttributeType type, float value, float playerHpRemain) {
         String message = "";
         DecimalFormat decimalFormat = new DecimalFormat("0");
-        message += playerName + "受到" + decimalFormat.format(value) + "点";
         if (type.equals(AttributeType.POISONOUS)) {
-            message += "毒性";
+            message += playerName + "受到" + decimalFormat.format(value) + "点毒性伤害, ";
         } else if (type.equals(AttributeType.FIRE)) {
-            message += "火焰";
+            message += playerName + "受到" + decimalFormat.format(value) + "点火焰伤害, ";
+        } else if (type.equals(AttributeType.LIFE_EXPERIENCE)) {
+            message += playerName + "获得了" + decimalFormat.format(value ) + "点人生的经验, ";
+        } else if (type.equals(AttributeType.CONTINUE_ONE_SECOND)) {
+            message += "续一秒, ";
         }
-        message += "伤害, " + playerName + "剩余生命：" + decimalFormat.format(playerHpRemain);
+        message +=  playerName + "剩余生命：" + decimalFormat.format(playerHpRemain);
         return message;
     }
 
@@ -81,8 +82,7 @@ public class GameLog {
         String attackerTitle = attackerJobName + attacker.getName();
 
         message += attackerTitle;
-        if (attackerJobName.equals(Job.solider) && attacker.getClass().equals(SoliderPlayer.class) &&
-                attacker.getWeapon() != null) {
+        if (attacker.getWeapon() != null) {
             message += "用" + attacker.getWeapon().getName();
         }
         message += "攻击了" + playerJobName + playerName;

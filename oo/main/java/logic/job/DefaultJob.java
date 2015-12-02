@@ -20,6 +20,8 @@ public class DefaultJob implements Job {
             return Job.stalker;
         } else if (this.jobType.equals(JobType.PALADIN)) {
             return Job.paladin;
+        } else if (this.jobType.equals(JobType.ELDERLY)) {
+            return Job.elderly;
         } else {
             return Job.normal;
         }

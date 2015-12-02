@@ -5,5 +5,5 @@ package logic.attribute;
  * it's the attribute type
  */
 public enum AttributeType {
-    HP, ATTACK, SAVE_HP, POISONOUS, FIRE, COLD, DIZZY, LUCK
+    HP, ATTACK, SAVE_HP, POISONOUS, FIRE, COLD, DIZZY, LUCK, LIFE_EXPERIENCE, CONTINUE_ONE_SECOND
 }
