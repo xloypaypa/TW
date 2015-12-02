@@ -7,7 +7,6 @@ import logic.buff.ColdBuff;
 import logic.buff.ContinueBuff;
 import logic.log.GameLog;
 import logic.unit.player.Player;
-import logic.unit.player.SoliderPlayer;
 
 import java.util.List;
 
@@ -16,6 +15,9 @@ import java.util.List;
  * it's the default round
  */
 public class DefaultRound extends Round {
+
+    final AttributeType[] buffsCalculateInRoundStart = {AttributeType.FIRE, AttributeType.POISONOUS,
+            AttributeType.LIFE_EXPERIENCE, AttributeType.CONTINUE_ONE_SECOND};
 
     final float[] defenderOldHp;
     private final GameLog gameLog;
@@ -48,10 +50,9 @@ public class DefaultRound extends Round {
         attacker.getBuff().clearContinueBuff();
 
         for (Player now : defender) {
-            calculateContinueHurt(now, AttributeType.FIRE);
-            calculateContinueHurt(now, AttributeType.POISONOUS);
-            calculateContinueHurt(now, AttributeType.LIFE_EXPERIENCE);
-            calculateContinueHurt(now, AttributeType.CONTINUE_ONE_SECOND);
+            for (AttributeType attributeType : buffsCalculateInRoundStart) {
+                calculateContinueHurt(now, attributeType);
+            }
             now.getBuff().clearContinueBuff();
         }
         return roundStatus;
@@ -60,7 +61,7 @@ public class DefaultRound extends Round {
     @Override
     protected RoundStatus whenActionStart() {
         for (Player now : defender) {
-            if (now instanceof SoliderPlayer && now.getEquip() != null) {
+            if (now.getEquip() != null) {
                 now.attachBuff(now.getEquip().getDefence());
             }
         }
