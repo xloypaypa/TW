@@ -3,6 +3,7 @@ package logic.unit.player;
 import logic.buff.BuffPackage;
 import logic.job.JobType;
 import logic.unit.item.weapon.LongWeapon;
+import logic.unit.item.weapon.ShortWeapon;
 import logic.unit.item.weapon.Weapon;
 
 /**
@@ -17,7 +18,7 @@ public class PaladinPlayer extends NormalPlayer {
 
     @Override
     public void setWeapon(Weapon weapon) throws Exception {
-        if (!(weapon instanceof LongWeapon)) {
+        if (weapon instanceof ShortWeapon) {
             throw new Exception();
         }
         super.setWeapon(weapon);

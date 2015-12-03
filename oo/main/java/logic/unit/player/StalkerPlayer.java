@@ -2,6 +2,7 @@ package logic.unit.player;
 
 import logic.buff.BuffPackage;
 import logic.job.JobType;
+import logic.unit.item.weapon.LongWeapon;
 import logic.unit.item.weapon.ShortWeapon;
 import logic.unit.item.weapon.Weapon;
 
@@ -17,7 +18,7 @@ public class StalkerPlayer extends NormalPlayer{
 
     @Override
     public void setWeapon(Weapon weapon) throws Exception {
-        if (!(weapon instanceof ShortWeapon)) {
+        if (weapon instanceof LongWeapon) {
             throw new Exception();
         }
         super.setWeapon(weapon);
