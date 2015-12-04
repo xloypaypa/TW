@@ -1,6 +1,5 @@
 package logic.game;
 
-import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.ColdBuff;
@@ -16,9 +15,6 @@ import java.util.List;
  */
 public class DefaultRound extends Round {
 
-    final AttributeType[] buffsCalculateInRoundStart = {AttributeType.FIRE, AttributeType.POISONOUS,
-            AttributeType.LIFE_EXPERIENCE, AttributeType.CONTINUE_ONE_SECOND};
-
     final float[] playerOldHp;
     final boolean[] attacked;
     private final GameLog gameLog;
@@ -33,7 +29,9 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenRoundStart() {
-        calculateUserContinueBuff();
+        for (Player now : players) {
+            now.getPlayerBuff().calculateUserContinueBuff();
+        }
         return RoundStatus.ACTION_START;
     }
 
@@ -68,7 +66,7 @@ public class DefaultRound extends Round {
     @Override
     protected RoundStatus whenActionEnd() {
         for (Player now : players) {
-            now.immediatelyBuffToAttribute();
+            now.getPlayerBuff().immediatelyBuffToAttribute();
         }
         if (buffPackage == null) {
             return RoundStatus.ACTION_START;
@@ -93,14 +91,14 @@ public class DefaultRound extends Round {
 
     private RoundStatus checkAttackerIsOk(Player attacker) {
         RoundStatus roundStatus = RoundStatus.ACTION;
-        List<ContinueBuff> continueBuffs = attacker.getBuff().getContinueBuffsWith(AttributeType.DIZZY);
+        List<ContinueBuff> continueBuffs = attacker.getPlayerBuff().getContinueBuffsWith(AttributeType.DIZZY);
         for (ContinueBuff continueBuff : continueBuffs) {
             gameLog.showDizzy(this.attacker.getName(), continueBuff.remainRound());
             continueBuff.effected();
             roundStatus = RoundStatus.ACTION_END;
         }
 
-        continueBuffs = this.attacker.getBuff().getContinueBuffsWith(AttributeType.COLD);
+        continueBuffs = this.attacker.getPlayerBuff().getContinueBuffsWith(AttributeType.COLD);
         for (ContinueBuff continueBuff : continueBuffs) {
             assert continueBuff instanceof ColdBuff;
             if (((ColdBuff) continueBuff).isDizzy()) {
@@ -108,37 +106,13 @@ public class DefaultRound extends Round {
             }
         }
         continueBuffs.forEach(ContinueBuff::effected);
-        this.attacker.getBuff().clearContinueBuff();
+        this.attacker.getPlayerBuff().clearContinueBuff();
         return roundStatus;
-    }
-
-    private void calculateContinueHurt(Player now, AttributeType attributeType) {
-        List<ContinueBuff> continueBuffs;
-        Attribute attribute = new Attribute();
-        float sum = 0;
-        continueBuffs = now.getBuff().getContinueBuffsWith(attributeType);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            sum += continueBuff.getEffect().getAttribute(attributeType);
-        }
-        if (sum != 0) {
-            attribute.setAttribute(AttributeType.HP, -sum);
-            now.getAttribute().mergeAttribute(attribute);
-            gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
-        }
     }
 
     private void saveUserHp() {
         for (int i = 0; i < playerOldHp.length; i++) {
             playerOldHp[i] = players[i].getAttribute().getAttribute(AttributeType.HP);
-        }
-    }
-
-    private void calculateUserContinueBuff() {
-        for (Player now : players) {
-            for (AttributeType attributeType : buffsCalculateInRoundStart) {
-                calculateContinueHurt(now, attributeType);
-            }
-            now.getBuff().clearContinueBuff();
         }
     }
 

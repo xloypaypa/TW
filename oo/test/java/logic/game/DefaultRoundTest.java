@@ -1,10 +1,7 @@
 package logic.game;
 
 import logic.attribute.AttributeType;
-import logic.buff.BuffPackage;
-import logic.buff.ColdBuff;
-import logic.buff.DizzyBuff;
-import logic.buff.FireBuff;
+import logic.buff.*;
 import logic.log.GameLog;
 import logic.unit.player.NormalPlayer;
 import logic.unit.player.Player;
@@ -35,25 +32,6 @@ public class DefaultRoundTest {
         defaultRound.whenAction();
 
         verify(playerB).attachBuff(buffPackage);
-    }
-
-    @Test
-    public void defender_should_clear_buff_when_action_end() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
-        playerA = spy(playerA);
-        playerB = spy(playerB);
-
-        BuffPackage buffPackage = new BuffPackage();
-        when(playerA.getAttack()).thenReturn(buffPackage);
-
-        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());
-        defaultRound.buffPackage = new BuffPackage();
-
-        defaultRound.whenActionStart();
-        defaultRound.whenActionEnd();
-
-        verify(playerB).immediatelyBuffToAttribute();
     }
 
     @Test

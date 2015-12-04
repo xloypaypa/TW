@@ -4,9 +4,11 @@ import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
 import logic.buff.NormalAttackBuff;
+import logic.buff.PlayerBuffPackage;
 import logic.job.DefaultJob;
 import logic.job.Job;
 import logic.job.JobType;
+import logic.log.GameLog;
 import logic.unit.item.Equip;
 import logic.unit.item.weapon.Weapon;
 
@@ -18,7 +20,7 @@ public class NormalPlayer implements Player {
 
     private final String name;
     private final Attribute attribute;
-    BuffPackage buffPackage;
+    PlayerBuffPackage buffPackage;
     private final Job job;
     private Weapon weapon;
     private Equip equip;
@@ -36,7 +38,7 @@ public class NormalPlayer implements Player {
 
         this.job = new DefaultJob(jobType);
 
-        this.buffPackage = new BuffPackage();
+        this.buffPackage = new PlayerBuffPackage(this, GameLog.getGameLog());
     }
 
     @Override
@@ -55,13 +57,7 @@ public class NormalPlayer implements Player {
     }
 
     @Override
-    public void immediatelyBuffToAttribute() {
-        this.attribute.mergeAttribute(this.buffPackage.getImmediatelyEffect());
-        this.buffPackage.clearImmediatelyBuff();
-    }
-
-    @Override
-    public BuffPackage getBuff() {
+    public PlayerBuffPackage getPlayerBuff() {
         return this.buffPackage;
     }
 

@@ -41,14 +41,6 @@ public class NormalPlayerTest {
     }
 
     @Test
-    public void should_clear_immediately_buff_when_calculate_buff() {
-        NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
-        normalPlayer.buffPackage = spy(normalPlayer.buffPackage);
-        normalPlayer.immediatelyBuffToAttribute();
-        verify(normalPlayer.buffPackage).clearImmediatelyBuff();
-    }
-
-    @Test
     public void should_only_get_direct_attack_of_weapon() throws Exception {
         NormalPlayer normalPlayer = new NormalPlayer("a", 1, 1);
         Random random = mock(Random.class);

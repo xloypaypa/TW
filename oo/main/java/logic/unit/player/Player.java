@@ -1,8 +1,8 @@
 package logic.unit.player;
 
 import logic.attribute.Attribute;
-import logic.buff.Buff;
 import logic.buff.BuffPackage;
+import logic.buff.PlayerBuffPackage;
 import logic.job.Job;
 import logic.unit.AttackAble;
 import logic.unit.Bag;
@@ -19,9 +19,7 @@ public interface Player extends AttackAble, Job, Bag {
 
     void attachBuff(BuffPackage buffPackage);
 
-    void immediatelyBuffToAttribute();
-
-    BuffPackage getBuff();
+    PlayerBuffPackage getPlayerBuff();
 
     boolean isAlive();
 
