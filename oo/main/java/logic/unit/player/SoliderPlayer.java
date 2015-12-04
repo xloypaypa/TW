@@ -1,7 +1,9 @@
 package logic.unit.player;
 
 import logic.buff.BuffPackage;
+import logic.buff.PlayerBuffPackage;
 import logic.job.JobType;
+import logic.log.GameLog;
 import logic.unit.item.weapon.NormalWeapon;
 import logic.unit.item.weapon.Weapon;
 
@@ -11,7 +13,13 @@ import logic.unit.item.weapon.Weapon;
  */
 public class SoliderPlayer extends NormalPlayer {
 
-    public SoliderPlayer(String name, float hp, float attack) {
+    public static SoliderPlayer getNewSoliderPlayer(String name, float hp, float attack) {
+        SoliderPlayer soliderPlayer = new SoliderPlayer(name, hp, attack);
+        soliderPlayer.setBuffPackage(new PlayerBuffPackage(soliderPlayer, GameLog.getGameLog()));
+        return soliderPlayer;
+    }
+
+    SoliderPlayer(String name, float hp, float attack) {
         super(name, hp, attack, JobType.SOLIDER);
     }
 

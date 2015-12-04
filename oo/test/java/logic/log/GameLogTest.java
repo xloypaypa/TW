@@ -24,17 +24,17 @@ public class GameLogTest {
 
     @Test
     public void testBuildAttackMessage() throws Exception {
-        final Player a = new NormalPlayer("a", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         assertEquals("普通人b攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
-                        a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), new NormalPlayer("b", 10, 10), new BuffPackage()));
+                        a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), NormalPlayer.getNewNormalPlayer("b", 10, 10), new BuffPackage()));
     }
 
     @Test
     public void testBuildSoliderWithWeaponAttackMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
+        SoliderPlayer attacker = SoliderPlayer.getNewSoliderPlayer("b", 10, 10);
         attacker.setWeapon(new NormalLuckyWeapon(0, new Random()));
-        final Player a = new NormalPlayer("a", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         assertEquals("战士b用normal lucky攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, new BuffPackage()));
@@ -42,20 +42,20 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithEquipAttackMessage() throws Exception {
-        SoliderPlayer soliderPlayer = new SoliderPlayer("b", 10, 10);
+        SoliderPlayer soliderPlayer = SoliderPlayer.getNewSoliderPlayer("b", 10, 10);
         soliderPlayer.setEquip(new Equip("c", 10));
         assertEquals("普通人a攻击了战士b,对b造成了0点伤害,b剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         soliderPlayer.getName(), soliderPlayer.getJobName(), 0,
-                        soliderPlayer.getAttribute().getAttribute(AttributeType.HP), new NormalPlayer("a", 10, 10),
+                        soliderPlayer.getAttribute().getAttribute(AttributeType.HP), NormalPlayer.getNewNormalPlayer("a", 10, 10),
                         new BuffPackage()));
     }
 
     @Test
     public void should_every_job_can_use_weapon() throws Exception {
-        PaladinPlayer attacker = new PaladinPlayer("b", 10, 10);
+        PaladinPlayer attacker = PaladinPlayer.getNewPaladinPlayer("b", 10, 10);
         attacker.setWeapon(new LongFireWeapon(0, new Random()));
-        final Player a = new NormalPlayer("a", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         assertEquals("圣骑士b用long fire攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, new BuffPackage()));
@@ -63,8 +63,8 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithoutWeaponAttackMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
-        final Player a = new NormalPlayer("a", 10, 10);
+        SoliderPlayer attacker = SoliderPlayer.getNewSoliderPlayer("b", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         assertEquals("战士b攻击了普通人a,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
                         a.getName(), a.getJobName(), 10, a.getAttribute().getAttribute(AttributeType.HP), attacker, new BuffPackage()));
@@ -72,9 +72,9 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithWeaponAttackAndLuckyMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
+        SoliderPlayer attacker = SoliderPlayer.getNewSoliderPlayer("b", 10, 10);
         attacker.setWeapon(new NormalLuckyWeapon(0,  new Random()));
-        final Player a = new NormalPlayer("a", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         BuffPackage buffPackage = new BuffPackage();
         buffPackage.addImmediatelyBuff(new LuckBuff(3));
 
@@ -85,9 +85,9 @@ public class GameLogTest {
 
     @Test
     public void testBuildSoliderWithWeaponAttackAndContinueMessage() throws Exception {
-        SoliderPlayer attacker = new SoliderPlayer("b", 10, 10);
+        SoliderPlayer attacker = SoliderPlayer.getNewSoliderPlayer("b", 10, 10);
         attacker.setWeapon(new NormalLuckyWeapon(0,  new Random()));
-        final Player a = new NormalPlayer("a", 10, 10);
+        final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         BuffPackage buffPackage = new BuffPackage();
         buffPackage.addContinueBuff(new DizzyBuff(3));
 
@@ -109,7 +109,7 @@ public class GameLogTest {
 
     @Test
     public void testBuildWinnerMessage() throws Exception {
-        Game game = new DefaultGame(new NormalPlayer("a", 1, 1), new NormalPlayer("b", -1, -1));
+        Game game = new DefaultGame(NormalPlayer.getNewNormalPlayer("a", 1, 1), NormalPlayer.getNewNormalPlayer("b", -1, -1));
         assertEquals("a胜利了.", GameLog.getGameLog().buildWinnerMessage(game));
     }
 }

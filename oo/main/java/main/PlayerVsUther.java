@@ -18,11 +18,11 @@ import java.util.Random;
 public class PlayerVsUther {
 
     public static void main(String[] args) throws Exception {
-        ElderlyPlayer playerA = new ElderlyPlayer("我蛤", 10000, 1);
+        ElderlyPlayer playerA = ElderlyPlayer.getNewNormalPlayer("我蛤", 10000, 1);
         playerA.setEquip(new Equip("选举法", 10000));
         playerA.setWeapon(new BasicLawWeapon(1, new Random()));
 
-        PaladinPlayer playerB = new PaladinPlayer("Uther", 30, 1);
+        PaladinPlayer playerB = PaladinPlayer.getNewPaladinPlayer("Uther", 30, 1);
         playerB.setEquip(new Equip("a", 1));
         playerB.setWeapon(new LongFireWeapon(4, new Random()));
 

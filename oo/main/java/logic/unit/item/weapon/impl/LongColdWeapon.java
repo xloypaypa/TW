@@ -22,7 +22,7 @@ public class LongColdWeapon extends LongWeapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 50) {
-            attack.addContinueBuff(new ColdBuff(3));
+            attack.addContinueBuff(new ColdBuff(6));
         }
         return attack;
     }

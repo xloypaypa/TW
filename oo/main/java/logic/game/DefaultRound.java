@@ -2,12 +2,8 @@ package logic.game;
 
 import logic.attribute.AttributeType;
 import logic.buff.BuffPackage;
-import logic.buff.ColdBuff;
-import logic.buff.ContinueBuff;
 import logic.log.GameLog;
 import logic.unit.player.Player;
-
-import java.util.List;
 
 /**
  * Created by xlo on 15/11/30.
@@ -66,7 +62,7 @@ public class DefaultRound extends Round {
     @Override
     protected RoundStatus whenActionEnd() {
         for (Player now : players) {
-            now.getPlayerBuff().immediatelyBuffToAttribute();
+            now.getPlayerBuff().calculateUserImmediatelyBuff();
         }
         if (buffPackage == null) {
             return RoundStatus.ACTION_START;
@@ -90,24 +86,7 @@ public class DefaultRound extends Round {
     }
 
     private RoundStatus checkAttackerIsOk(Player attacker) {
-        RoundStatus roundStatus = RoundStatus.ACTION;
-        List<ContinueBuff> continueBuffs = attacker.getPlayerBuff().getContinueBuffsWith(AttributeType.DIZZY);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            gameLog.showDizzy(this.attacker.getName(), continueBuff.remainRound());
-            continueBuff.effected();
-            roundStatus = RoundStatus.ACTION_END;
-        }
-
-        continueBuffs = this.attacker.getPlayerBuff().getContinueBuffsWith(AttributeType.COLD);
-        for (ContinueBuff continueBuff : continueBuffs) {
-            assert continueBuff instanceof ColdBuff;
-            if (((ColdBuff) continueBuff).isDizzy()) {
-                roundStatus = RoundStatus.ACTION_END;
-            }
-        }
-        continueBuffs.forEach(ContinueBuff::effected);
-        this.attacker.getPlayerBuff().clearContinueBuff();
-        return roundStatus;
+        return attacker.getPlayerBuff().checkUserCanAttack() ? RoundStatus.ACTION : RoundStatus.ACTION_END;
     }
 
     private void saveUserHp() {

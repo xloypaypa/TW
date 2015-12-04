@@ -24,34 +24,55 @@ public class PlayerBuffPackage extends BuffPackage {
         this.gameLog = gameLog;
     }
 
-    public void immediatelyBuffToAttribute() {
-        player.getAttribute().mergeAttribute(player.getPlayerBuff().getImmediatelyEffect());
-        player.getPlayerBuff().clearImmediatelyBuff();
+    public void calculateUserImmediatelyBuff() {
+        player.getAttribute().mergeAttribute(this.getImmediatelyEffect());
+        this.clearImmediatelyBuff();
     }
 
     public void calculateUserContinueBuff() {
         for (AttributeType attributeType : buffsCalculateInRoundStart) {
             calculateContinueHurt(player, attributeType);
         }
-        player.getPlayerBuff().clearContinueBuff();
+        this.clearContinueBuff();
+    }
+
+    public boolean checkUserCanAttack() {
+        boolean canAttack = true;
+        List<ContinueBuff> continueBuffs = this.getContinueBuffsWith(AttributeType.DIZZY);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            gameLog.showDizzy(this.player.getName(), continueBuff.remainRound());
+            continueBuff.effected();
+            canAttack = false;
+        }
+
+        continueBuffs = this.getContinueBuffsWith(AttributeType.COLD);
+        for (ContinueBuff continueBuff : continueBuffs) {
+            assert continueBuff instanceof ColdBuff;
+            if (((ColdBuff) continueBuff).isDizzy()) {
+                canAttack = false;
+            }
+        }
+        continueBuffs.forEach(ContinueBuff::effected);
+        this.clearContinueBuff();
+        return canAttack;
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    private void calculateContinueHurt(Player now, AttributeType attributeType) {
+    private void calculateContinueHurt(Player player, AttributeType attributeType) {
         List<ContinueBuff> continueBuffs;
         Attribute attribute = new Attribute();
         float sum = 0;
-        continueBuffs = now.getPlayerBuff().getContinueBuffsWith(attributeType);
+        continueBuffs = this.getContinueBuffsWith(attributeType);
         for (ContinueBuff continueBuff : continueBuffs) {
             sum += continueBuff.getEffect().getAttribute(attributeType);
         }
         if (sum != 0) {
             attribute.setAttribute(AttributeType.HP, -sum);
-            now.getAttribute().mergeAttribute(attribute);
-            gameLog.showContinueBuffHurt(now.getName(), attributeType, sum, now.getAttribute().getAttribute(AttributeType.HP));
+            player.getAttribute().mergeAttribute(attribute);
+            gameLog.showContinueBuffHurt(player.getName(), attributeType, sum, player.getAttribute().getAttribute(AttributeType.HP));
         }
     }
 

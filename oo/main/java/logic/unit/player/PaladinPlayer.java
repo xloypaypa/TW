@@ -1,7 +1,9 @@
 package logic.unit.player;
 
 import logic.buff.BuffPackage;
+import logic.buff.PlayerBuffPackage;
 import logic.job.JobType;
+import logic.log.GameLog;
 import logic.unit.item.weapon.LongWeapon;
 import logic.unit.item.weapon.ShortWeapon;
 import logic.unit.item.weapon.Weapon;
@@ -12,7 +14,13 @@ import logic.unit.item.weapon.Weapon;
  */
 public class PaladinPlayer extends NormalPlayer {
 
-    public PaladinPlayer(String name, float hp, float attack) {
+    public static PaladinPlayer getNewPaladinPlayer(String name, float hp, float attack) {
+        PaladinPlayer paladinPlayer = new PaladinPlayer(name, hp, attack);
+        paladinPlayer.setBuffPackage(new PlayerBuffPackage(paladinPlayer, GameLog.getGameLog()));
+        return paladinPlayer;
+    }
+
+    PaladinPlayer(String name, float hp, float attack) {
         super(name, hp, attack, JobType.PALADIN);
     }
 

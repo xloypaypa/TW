@@ -1,7 +1,9 @@
 package logic.unit.player;
 
 import logic.buff.BuffPackage;
+import logic.buff.PlayerBuffPackage;
 import logic.job.JobType;
+import logic.log.GameLog;
 import logic.unit.item.weapon.LongWeapon;
 import logic.unit.item.weapon.ShortWeapon;
 import logic.unit.item.weapon.Weapon;
@@ -12,7 +14,13 @@ import logic.unit.item.weapon.Weapon;
  */
 public class StalkerPlayer extends NormalPlayer{
 
-    public StalkerPlayer(String name, float hp, float attack) {
+    public static StalkerPlayer getNewStalkerPlayer(String name, float hp, float attack) {
+        StalkerPlayer stalkerPlayer = new StalkerPlayer(name, hp, attack);
+        stalkerPlayer.setBuffPackage(new PlayerBuffPackage(stalkerPlayer, GameLog.getGameLog()));
+        return stalkerPlayer;
+    }
+
+    StalkerPlayer(String name, float hp, float attack) {
         super(name, hp, attack, JobType.STALKER);
     }
 

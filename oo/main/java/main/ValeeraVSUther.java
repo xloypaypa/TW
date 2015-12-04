@@ -18,10 +18,10 @@ import java.util.Random;
 public class ValeeraVSUther {
 
     public static void main(String[] args) throws Exception {
-        StalkerPlayer playerA = new StalkerPlayer("Valeera", 30, 0);
+        StalkerPlayer playerA = StalkerPlayer.getNewStalkerPlayer("Valeera", 30, 0);
         playerA.setWeapon(new ShortLuckyWeapon(3, new Random()));
 
-        PaladinPlayer playerB = new PaladinPlayer("Uther", 30, 1);
+        PaladinPlayer playerB = PaladinPlayer.getNewPaladinPlayer("Uther", 30, 1);
         playerB.setEquip(new Equip("a", 1));
         playerB.setWeapon(new LongColdWeapon(4, new Random()));
 

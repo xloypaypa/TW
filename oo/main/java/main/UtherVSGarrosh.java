@@ -18,11 +18,11 @@ import java.util.Random;
 public class UtherVSGarrosh {
 
     public static void main(String[] args) throws Exception {
-        PaladinPlayer playerA = new PaladinPlayer("Uther", 30, 1);
+        PaladinPlayer playerA = PaladinPlayer.getNewPaladinPlayer("Uther", 30, 1);
         playerA.setEquip(new Equip("a", 1));
         playerA.setWeapon(new LongFireWeapon(4, new Random()));
 
-        SoliderPlayer playerB = new SoliderPlayer("Garrosh", 30, 0);
+        SoliderPlayer playerB = SoliderPlayer.getNewSoliderPlayer("Garrosh", 30, 0);
         playerB.setEquip(new Equip("a", 2));
         playerB.setWeapon(new NormalLuckyWeapon(3, new Random()));
 

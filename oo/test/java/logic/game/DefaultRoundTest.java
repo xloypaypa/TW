@@ -18,8 +18,8 @@ public class DefaultRoundTest {
 
     @Test
     public void defender_should_be_attack_when_action() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
         playerA = spy(playerA);
         playerB = spy(playerB);
 
@@ -36,8 +36,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_save_players_hp_when_round_start() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());
 
@@ -48,8 +48,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_write_log_when_action_end() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
         playerA = spy(playerA);
         playerB = spy(playerB);
 
@@ -69,8 +69,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_go_to_round_end_when_attacker_is_dizzy() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
         buffPackage.addContinueBuff(new DizzyBuff(3));
@@ -82,8 +82,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_go_to_action_end_at_3rd_round_when_attacker_is_cold() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
         buffPackage.addContinueBuff(new ColdBuff(3));
@@ -99,8 +99,8 @@ public class DefaultRoundTest {
 
     @Test
     public void should_get_hurt_when_round_start_if_have_fire_buff() {
-        Player playerA = new NormalPlayer("a", 100, 10);
-        Player playerB = new NormalPlayer("b", 100, 10);
+        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
+        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
         buffPackage.addContinueBuff(new FireBuff(3, 1));

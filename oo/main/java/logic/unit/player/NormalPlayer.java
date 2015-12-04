@@ -25,7 +25,13 @@ public class NormalPlayer implements Player {
     private Weapon weapon;
     private Equip equip;
 
-    public NormalPlayer(String name, float hp, float attack) {
+    public static NormalPlayer getNewNormalPlayer(String name, float hp, float attack) {
+        NormalPlayer normalPlayer = new NormalPlayer(name, hp, attack);
+        normalPlayer.setBuffPackage(new PlayerBuffPackage(normalPlayer, GameLog.getGameLog()));
+        return normalPlayer;
+    }
+
+    NormalPlayer(String name, float hp, float attack) {
         this(name, hp, attack, JobType.NORMAL);
     }
 
@@ -37,8 +43,10 @@ public class NormalPlayer implements Player {
         this.attribute.setAttribute(AttributeType.ATTACK, attack);
 
         this.job = new DefaultJob(jobType);
+    }
 
-        this.buffPackage = new PlayerBuffPackage(this, GameLog.getGameLog());
+    void setBuffPackage(PlayerBuffPackage buffPackage) {
+        this.buffPackage = buffPackage;
     }
 
     @Override
