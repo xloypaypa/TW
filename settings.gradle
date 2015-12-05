@@ -1,2 +1,4 @@
 rootProject.name = 'TW'
+include 'TDD'
+include 'Arena'
 
