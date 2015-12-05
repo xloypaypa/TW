@@ -1,7 +1,8 @@
 package logic.log;
 
 import logic.attribute.AttributeType;
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.DizzyBuff;
 import logic.buff.LuckBuff;
 import logic.game.DefaultGame;
@@ -76,7 +77,7 @@ public class GameLogTest {
         attacker.setWeapon(new NormalLuckyWeapon(0,  new Random()));
         final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addImmediatelyBuff(new LuckBuff(3));
+        buffPackage.addImmediatelyBuff(new BuffFromMessage(), new LuckBuff(3));
 
         assertEquals("战士b用normal lucky攻击了普通人a,b发动了全力一击,对a造成了10点伤害,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(
@@ -89,7 +90,7 @@ public class GameLogTest {
         attacker.setWeapon(new NormalLuckyWeapon(0,  new Random()));
         final Player a = NormalPlayer.getNewNormalPlayer("a", 10, 10);
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addContinueBuff(new DizzyBuff(3));
+        buffPackage.addContinueBuff(new BuffFromMessage(), new DizzyBuff(3));
 
         assertEquals("战士b用normal lucky攻击了普通人a,对a造成了10点伤害,a晕倒了,a剩余10点生命值.",
                 GameLog.getGameLog().buildAttackMessage(

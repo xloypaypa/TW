@@ -1,7 +1,9 @@
-package logic.buff;
+package logic.buff.buffPackage;
 
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
+import logic.buff.ContinueBuff;
+import logic.buff.ImmediatelyBuff;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
  */
 public class BuffPackage {
 
+    protected BuffFromMessage buffFromMessage;
+
     private Attribute immediatelyAttribute;
 
     private final List<ContinueBuff> continueBuffs;
@@ -23,11 +27,11 @@ public class BuffPackage {
         this.continueBuffs = new LinkedList<>();
     }
 
-    public void addImmediatelyBuff(ImmediatelyBuff buff) {
+    public void addImmediatelyBuff(BuffFromMessage buffFromMessage, ImmediatelyBuff buff) {
         immediatelyAttribute.mergeAttribute(buff.getEffect());
     }
 
-    public void addContinueBuff(ContinueBuff buff) {
+    public void addContinueBuff(BuffFromMessage buffFromMessage, ContinueBuff buff) {
         for (ContinueBuff continueBuff : continueBuffs) {
             if (continueBuff.getClass().equals(buff.getClass())) {
                 continueBuff.addRound(buff.remainRound());
@@ -47,9 +51,11 @@ public class BuffPackage {
     }
 
     public void addBuffPackage(BuffPackage buffPackage) {
-        buffPackage.continueBuffs.forEach(this::addContinueBuff);
+        for (ContinueBuff continueBuff : buffPackage.continueBuffs) {
+            this.addContinueBuff(buffPackage.buffFromMessage, continueBuff);
+        }
         ImmediatelyBuff immediatelyBuff = () -> buffPackage.immediatelyAttribute;
-        addImmediatelyBuff(immediatelyBuff);
+        addImmediatelyBuff(buffPackage.buffFromMessage, immediatelyBuff);
     }
 
     public void clearImmediatelyBuff() {

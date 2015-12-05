@@ -1,7 +1,7 @@
 package logic.unit.player;
 
 import logic.attribute.AttributeType;
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.job.Job;
 import logic.unit.item.weapon.impl.NormalLuckyWeapon;
 import org.junit.Test;

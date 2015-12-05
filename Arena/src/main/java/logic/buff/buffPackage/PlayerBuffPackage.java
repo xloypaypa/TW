@@ -1,7 +1,9 @@
-package logic.buff;
+package logic.buff.buffPackage;
 
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
+import logic.buff.ColdBuff;
+import logic.buff.ContinueBuff;
 import logic.log.GameLog;
 import logic.unit.player.Player;
 

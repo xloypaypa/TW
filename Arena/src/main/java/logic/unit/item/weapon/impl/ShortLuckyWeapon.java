@@ -1,6 +1,6 @@
 package logic.unit.item.weapon.impl;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.LuckBuff;
 import logic.unit.item.weapon.ShortWeapon;
 
@@ -22,7 +22,7 @@ public class ShortLuckyWeapon extends ShortWeapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 25) {
-            attack.addImmediatelyBuff(new LuckBuff(3));
+            attack.addImmediatelyBuff(this.getBuffFromMessage(), new LuckBuff(3));
         }
         return attack;
     }

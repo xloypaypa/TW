@@ -1,6 +1,7 @@
 package logic.unit.item;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.DefenceBuff;
 import logic.unit.DefenceAble;
 
@@ -21,7 +22,9 @@ public class Equip implements DefenceAble {
     @Override
     public BuffPackage getDefence() {
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addImmediatelyBuff(new DefenceBuff(defence));
+        BuffFromMessage buffFromMessage = new BuffFromMessage();
+        buffFromMessage.addBuffFrom(this.getClass(), this.name);
+        buffPackage.addImmediatelyBuff(buffFromMessage, new DefenceBuff(defence));
         return buffPackage;
     }
 }

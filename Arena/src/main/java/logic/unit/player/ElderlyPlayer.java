@@ -1,8 +1,8 @@
 package logic.unit.player;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.ContinuedOneSecond;
-import logic.buff.PlayerBuffPackage;
+import logic.buff.buffPackage.PlayerBuffPackage;
 import logic.job.JobType;
 import logic.log.GameLog;
 import logic.unit.item.weapon.Weapon;
@@ -17,7 +17,7 @@ public class ElderlyPlayer extends NormalPlayer {
         ElderlyPlayer elderlyPlayer = new ElderlyPlayer(name, hp, attack);
         elderlyPlayer.setBuffPackage(new PlayerBuffPackage(elderlyPlayer, GameLog.getGameLog()));
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addContinueBuff(new ContinuedOneSecond());
+        buffPackage.addContinueBuff(elderlyPlayer.getBuffFromMessage(), new ContinuedOneSecond());
         elderlyPlayer.attachBuff(buffPackage);
         return elderlyPlayer;
     }

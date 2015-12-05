@@ -1,6 +1,6 @@
 package logic.unit.item.weapon;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.LifeExperienceBuff;
 
 import java.util.Random;
@@ -22,7 +22,7 @@ public class BasicLawWeapon extends Weapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 25) {
-            attack.addContinueBuff(new LifeExperienceBuff(5, 1));
+            attack.addContinueBuff(this.getBuffFromMessage(), new LifeExperienceBuff(5, 1));
         }
         return attack;
     }

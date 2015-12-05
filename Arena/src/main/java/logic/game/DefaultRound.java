@@ -1,7 +1,7 @@
 package logic.game;
 
 import logic.attribute.AttributeType;
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.log.GameLog;
 import logic.unit.player.Player;
 

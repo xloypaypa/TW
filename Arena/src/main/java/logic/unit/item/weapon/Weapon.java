@@ -1,6 +1,7 @@
 package logic.unit.item.weapon;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.NormalAttackBuff;
 import logic.unit.AttackAble;
 
@@ -21,7 +22,8 @@ public class Weapon implements AttackAble {
     @Override
     public BuffPackage getAttack() {
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addImmediatelyBuff(new NormalAttackBuff(attack));
+        BuffFromMessage buffFromMessage = getBuffFromMessage();
+        buffPackage.addImmediatelyBuff(buffFromMessage, new NormalAttackBuff(attack));
         return buffPackage;
     }
 
@@ -31,5 +33,11 @@ public class Weapon implements AttackAble {
 
     public String getName() {
         return name;
+    }
+
+    protected BuffFromMessage getBuffFromMessage() {
+        BuffFromMessage buffFromMessage = new BuffFromMessage();
+        buffFromMessage.addBuffFrom(this.getClass(), this.getName());
+        return buffFromMessage;
     }
 }

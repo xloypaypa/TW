@@ -1,6 +1,6 @@
 package logic.unit.item.weapon.impl;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.FireBuff;
 import logic.unit.item.weapon.LongWeapon;
 
@@ -22,7 +22,7 @@ public class LongFireWeapon extends LongWeapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 50) {
-            attack.addContinueBuff(new FireBuff(9, 1));
+            attack.addContinueBuff(this.getBuffFromMessage(), new FireBuff(9, 1));
         }
         return attack;
     }

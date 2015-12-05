@@ -1,8 +1,8 @@
 package logic.unit.player;
 
 import logic.attribute.Attribute;
-import logic.buff.BuffPackage;
-import logic.buff.PlayerBuffPackage;
+import logic.buff.buffPackage.BuffPackage;
+import logic.buff.buffPackage.PlayerBuffPackage;
 import logic.job.Job;
 import logic.unit.AttackAble;
 import logic.unit.Bag;

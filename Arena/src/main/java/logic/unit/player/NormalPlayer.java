@@ -2,9 +2,10 @@ package logic.unit.player;
 
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.NormalAttackBuff;
-import logic.buff.PlayerBuffPackage;
+import logic.buff.buffPackage.PlayerBuffPackage;
 import logic.job.DefaultJob;
 import logic.job.Job;
 import logic.job.JobType;
@@ -82,7 +83,8 @@ public class NormalPlayer implements Player {
     @Override
     public BuffPackage getAttack() {
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addImmediatelyBuff(new NormalAttackBuff(this.attribute.getAttribute(AttributeType.ATTACK)));
+        BuffFromMessage buffFromMessage = getBuffFromMessage();
+        buffPackage.addImmediatelyBuff(buffFromMessage, new NormalAttackBuff(this.attribute.getAttribute(AttributeType.ATTACK)));
         getWeaponAttack(buffPackage);
         return buffPackage;
     }
@@ -110,8 +112,14 @@ public class NormalPlayer implements Player {
     void getWeaponAttack(BuffPackage buffPackage) {
         if (this.getWeapon() != null) {
             BuffPackage weapon = new BuffPackage();
-            weapon.addImmediatelyBuff(new NormalAttackBuff(this.getWeapon().getDirectAttack()));
+            weapon.addImmediatelyBuff(this.getBuffFromMessage(), new NormalAttackBuff(this.getWeapon().getDirectAttack()));
             buffPackage.addBuffPackage(weapon);
         }
+    }
+
+    protected BuffFromMessage getBuffFromMessage() {
+        BuffFromMessage buffFromMessage = new BuffFromMessage();
+        buffFromMessage.addBuffFrom(this.getClass(), this.getName());
+        return buffFromMessage;
     }
 }

@@ -1,7 +1,7 @@
 package logic.unit.player;
 
-import logic.buff.BuffPackage;
-import logic.buff.PlayerBuffPackage;
+import logic.buff.buffPackage.BuffPackage;
+import logic.buff.buffPackage.PlayerBuffPackage;
 import logic.job.JobType;
 import logic.log.GameLog;
 import logic.unit.item.weapon.LongWeapon;

@@ -1,6 +1,6 @@
 package logic.unit.item.weapon.impl;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.buff.DizzyBuff;
 import logic.unit.item.weapon.NormalWeapon;
 
@@ -22,7 +22,7 @@ public class NormalDizzyWeapon extends NormalWeapon {
     public BuffPackage getAttack() {
         BuffPackage attack = super.getAttack();
         if (this.random.nextInt(100) > 80) {
-            attack.addContinueBuff(new DizzyBuff(3));
+            attack.addContinueBuff(this.getBuffFromMessage(), new DizzyBuff(3));
         }
         return attack;
     }

@@ -2,6 +2,8 @@ package logic.game;
 
 import logic.attribute.AttributeType;
 import logic.buff.*;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.log.GameLog;
 import logic.unit.player.NormalPlayer;
 import logic.unit.player.Player;
@@ -73,7 +75,7 @@ public class DefaultRoundTest {
         Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addContinueBuff(new DizzyBuff(3));
+        buffPackage.addContinueBuff(new BuffFromMessage(), new DizzyBuff(3));
         playerA.attachBuff(buffPackage);
 
         DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
@@ -86,7 +88,7 @@ public class DefaultRoundTest {
         Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addContinueBuff(new ColdBuff(3));
+        buffPackage.addContinueBuff(new BuffFromMessage(), new ColdBuff(3));
         playerA.attachBuff(buffPackage);
 
         DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
@@ -103,7 +105,7 @@ public class DefaultRoundTest {
         Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
         BuffPackage buffPackage = new BuffPackage();
-        buffPackage.addContinueBuff(new FireBuff(3, 1));
+        buffPackage.addContinueBuff(new BuffFromMessage(), new FireBuff(3, 1));
         playerB.attachBuff(buffPackage);
 
         DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());

@@ -1,6 +1,6 @@
 package logic.unit;
 
-import logic.buff.BuffPackage;
+import logic.buff.buffPackage.BuffPackage;
 
 /**
  * Created by xlo on 15/11/29.
