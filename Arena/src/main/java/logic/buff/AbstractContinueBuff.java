@@ -8,7 +8,7 @@ public abstract class AbstractContinueBuff implements ContinueBuff {
 
     private int round;
 
-    AbstractContinueBuff(int round) {
+    protected AbstractContinueBuff(int round) {
         this.round = round;
     }
 

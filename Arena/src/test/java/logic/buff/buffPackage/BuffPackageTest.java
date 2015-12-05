@@ -1,8 +1,13 @@
-package logic.buff;
+package logic.buff.buffPackage;
 
 import logic.attribute.AttributeType;
+import logic.buff.ColdBuff;
+import logic.buff.DefenceBuff;
+import logic.buff.FireBuff;
+import logic.buff.NormalAttackBuff;
 import logic.buff.buffPackage.BuffFromMessage;
 import logic.buff.buffPackage.BuffPackage;
+import logic.unit.player.NormalPlayer;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,6 +17,21 @@ import static org.junit.Assert.*;
  * it's the testing code for buff package
  */
 public class BuffPackageTest {
+
+    @Test
+    public void should_merge_from_message_when_add_new_buff() {
+        BuffPackage buffPackage = new BuffPackage();
+
+        BuffFromMessage buffFromMessage1 = new BuffFromMessage();
+        buffFromMessage1.addBuffFrom(NormalPlayer.class, "a");
+        buffPackage.addImmediatelyBuff(buffFromMessage1, new NormalAttackBuff(10));
+
+        BuffFromMessage buffFromMessage2 = new BuffFromMessage();
+        buffFromMessage2.addBuffFrom(NormalPlayer.class, "b");
+        buffPackage.addImmediatelyBuff(buffFromMessage2, new NormalAttackBuff(10));
+
+        assertEquals(2, buffPackage.buffFromMessage.getBuffFromMessageNodes().size());
+    }
 
     @Test
     public void should_have_10_attack_when_have_20_attack_and_10_defence_before() {

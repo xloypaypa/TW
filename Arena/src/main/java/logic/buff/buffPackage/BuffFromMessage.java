@@ -1,7 +1,9 @@
 package logic.buff.buffPackage;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by xlo on 15-12-5.
@@ -9,10 +11,10 @@ import java.util.List;
  */
 public class BuffFromMessage {
 
-    private final List<BuffFromMessageNode> buffFromMessageNodes;
+    private final Set<BuffFromMessageNode> buffFromMessageNodes;
 
     public BuffFromMessage() {
-        this.buffFromMessageNodes = new LinkedList<>();
+        this.buffFromMessageNodes = new HashSet<>();
     }
 
     public List<BuffFromMessageNode> getBuffFromMessageNodes() {
@@ -34,6 +36,18 @@ public class BuffFromMessage {
         public BuffFromMessageNode(Class aClass, String name) {
             this.aClass = aClass;
             this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            BuffFromMessageNode that = (BuffFromMessageNode) o;
+
+            return !(aClass != null ? !aClass.equals(that.aClass) : that.aClass != null)
+                    && !(name != null ? !name.equals(that.name) : that.name != null);
+
         }
 
         public Class getaClass() {

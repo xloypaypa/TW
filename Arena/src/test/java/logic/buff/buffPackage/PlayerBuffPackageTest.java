@@ -1,7 +1,11 @@
-package logic.buff;
+package logic.buff.buffPackage;
 
 import logic.attribute.Attribute;
 import logic.attribute.AttributeType;
+import logic.buff.AbstractContinueBuff;
+import logic.buff.ColdBuff;
+import logic.buff.DizzyBuff;
+import logic.buff.FireBuff;
 import logic.buff.buffPackage.BuffFromMessage;
 import logic.buff.buffPackage.PlayerBuffPackage;
 import logic.log.GameLog;

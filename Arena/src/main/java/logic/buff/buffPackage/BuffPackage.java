@@ -25,13 +25,16 @@ public class BuffPackage {
     public BuffPackage() {
         this.immediatelyAttribute = new Attribute();
         this.continueBuffs = new LinkedList<>();
+        this.buffFromMessage = new BuffFromMessage();
     }
 
     public void addImmediatelyBuff(BuffFromMessage buffFromMessage, ImmediatelyBuff buff) {
+        this.buffFromMessage.addBuffFromMessage(buffFromMessage);
         immediatelyAttribute.mergeAttribute(buff.getEffect());
     }
 
     public void addContinueBuff(BuffFromMessage buffFromMessage, ContinueBuff buff) {
+        this.buffFromMessage.addBuffFromMessage(buffFromMessage);
         for (ContinueBuff continueBuff : continueBuffs) {
             if (continueBuff.getClass().equals(buff.getClass())) {
                 continueBuff.addRound(buff.remainRound());
