@@ -23,7 +23,7 @@ public class Equip implements DefenceAble {
     public BuffPackage getDefence() {
         BuffPackage buffPackage = new BuffPackage();
         BuffFromMessage buffFromMessage = new BuffFromMessage();
-        buffFromMessage.addBuffFrom(this.getClass(), this.name);
+        buffFromMessage.addBuffFrom(this);
         buffPackage.addImmediatelyBuff(buffFromMessage, new DefenceBuff(defence));
         return buffPackage;
     }

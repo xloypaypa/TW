@@ -21,21 +21,23 @@ public class BuffFromMessage {
         return new LinkedList<>(this.buffFromMessageNodes);
     }
 
-    public void addBuffFrom(Class aClass, String name) {
-        this.buffFromMessageNodes.add(new BuffFromMessageNode(aClass, name));
+    public void addBuffFrom(Object object) {
+        this.buffFromMessageNodes.add(new BuffFromMessageNode(object));
     }
 
     public void addBuffFromMessage(BuffFromMessage buffFromMessage) {
         this.buffFromMessageNodes.addAll(buffFromMessage.buffFromMessageNodes);
     }
 
-    public class BuffFromMessageNode {
-        Class aClass;
-        String name;
+    public void clear() {
+        this.buffFromMessageNodes.clear();
+    }
 
-        public BuffFromMessageNode(Class aClass, String name) {
-            this.aClass = aClass;
-            this.name = name;
+    public class BuffFromMessageNode {
+        Object object;
+
+        public BuffFromMessageNode(Object object) {
+            this.object = object;
         }
 
         @Override
@@ -43,19 +45,13 @@ public class BuffFromMessage {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            BuffFromMessageNode that = (BuffFromMessageNode) o;
+            BuffFromMessageNode node = (BuffFromMessageNode) o;
 
-            return !(aClass != null ? !aClass.equals(that.aClass) : that.aClass != null)
-                    && !(name != null ? !name.equals(that.name) : that.name != null);
-
+            return !(object != null ? !object.equals(node.object) : node.object != null);
         }
 
-        public Class getaClass() {
-            return aClass;
-        }
-
-        public String getName() {
-            return name;
+        public Object getObject() {
+            return object;
         }
     }
 }

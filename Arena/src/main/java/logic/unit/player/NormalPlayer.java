@@ -119,7 +119,7 @@ public class NormalPlayer implements Player {
 
     protected BuffFromMessage getBuffFromMessage() {
         BuffFromMessage buffFromMessage = new BuffFromMessage();
-        buffFromMessage.addBuffFrom(this.getClass(), this.getName());
+        buffFromMessage.addBuffFrom(this);
         return buffFromMessage;
     }
 }

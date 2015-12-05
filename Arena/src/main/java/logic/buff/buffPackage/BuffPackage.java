@@ -87,6 +87,14 @@ public class BuffPackage {
         continueBuffs.forEach(ContinueBuff::effected);
     }
 
+    public BuffFromMessage getBuffFromMessage() {
+        return buffFromMessage;
+    }
+
+    public void clearBuffFromMessage() {
+        buffFromMessage.clear();
+    }
+
     public Attribute getImmediatelyEffect() {
         Attribute attribute = new Attribute();
         attribute.mergeAttribute(this.immediatelyAttribute);

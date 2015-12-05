@@ -5,12 +5,10 @@ import logic.buff.ColdBuff;
 import logic.buff.DefenceBuff;
 import logic.buff.FireBuff;
 import logic.buff.NormalAttackBuff;
-import logic.buff.buffPackage.BuffFromMessage;
-import logic.buff.buffPackage.BuffPackage;
 import logic.unit.player.NormalPlayer;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by xlo on 15/11/29.
@@ -23,11 +21,11 @@ public class BuffPackageTest {
         BuffPackage buffPackage = new BuffPackage();
 
         BuffFromMessage buffFromMessage1 = new BuffFromMessage();
-        buffFromMessage1.addBuffFrom(NormalPlayer.class, "a");
+        buffFromMessage1.addBuffFrom(NormalPlayer.getNewNormalPlayer("a", 1, 1));
         buffPackage.addImmediatelyBuff(buffFromMessage1, new NormalAttackBuff(10));
 
         BuffFromMessage buffFromMessage2 = new BuffFromMessage();
-        buffFromMessage2.addBuffFrom(NormalPlayer.class, "b");
+        buffFromMessage2.addBuffFrom(NormalPlayer.getNewNormalPlayer("b", 1, 1));
         buffPackage.addImmediatelyBuff(buffFromMessage2, new NormalAttackBuff(10));
 
         assertEquals(2, buffPackage.buffFromMessage.getBuffFromMessageNodes().size());

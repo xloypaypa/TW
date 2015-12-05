@@ -1,6 +1,5 @@
 package logic.game;
 
-import logic.log.GameLog;
 import logic.unit.player.Player;
 
 /**
@@ -17,7 +16,7 @@ public class DefaultGame extends Game {
 
     @Override
     public void runOneRound() {
-        Round round = new DefaultRound(this.getPlayers(), GameLog.getGameLog());
+        Round round = new DefaultRound(this.getPlayers());
         round.startARound();
     }
 

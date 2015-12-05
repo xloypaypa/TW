@@ -1,9 +1,11 @@
 package logic.log;
 
 import logic.attribute.AttributeType;
-import logic.buff.buffPackage.BuffPackage;
 import logic.buff.ContinueBuff;
+import logic.buff.buffPackage.BuffFromMessage;
+import logic.buff.buffPackage.BuffPackage;
 import logic.game.Game;
+import logic.unit.item.weapon.Weapon;
 import logic.unit.player.ElderlyPlayer;
 import logic.unit.player.Player;
 
@@ -33,8 +35,59 @@ public class GameLog {
         return gameLog;
     }
 
-    public void afterPlayerBeAttacked(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
-        System.out.println(buildAttackMessage(playerName, playerJobName, hurt, playerHpRemain, attacker, buffPackage));
+    public void playerBeAttacker(BuffPackage buffPackage, Player player) {
+        String s = buildBeAttackMessage(buffPackage, player);
+        if (s.length() != 0) {
+            System.out.println(s);
+        }
+    }
+
+    String buildBeAttackMessage(BuffPackage buffPackage, Player player) {
+        boolean isLucky = buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0;
+        DecimalFormat decimalFormat = new DecimalFormat("0");
+        String message = "";
+
+        Player attacker = null;
+        Weapon weapon = null;
+        for (BuffFromMessage.BuffFromMessageNode node : buffPackage.getBuffFromMessage().getBuffFromMessageNodes()) {
+            if (node.getObject() instanceof Player) {
+                attacker = (Player) node.getObject();
+            } else if (node.getObject() instanceof Weapon) {
+                weapon = (Weapon) node.getObject();
+            }
+        }
+
+        if (attacker == null) {
+            return "";
+        }
+
+        message += attacker.getJobName() + attacker.getName();
+        if (weapon != null) {
+            message += "用" + weapon.getName();
+        }
+        message += "攻击了" + player.getJobName() + player.getName();
+        if (isLucky) {
+            message += "," + attacker.getName() + "发动了全力一击";
+        }
+
+        message += ",对"
+                + player.getName() + "造成了"
+                + decimalFormat.format(-buffPackage.getImmediatelyEffect().getAttribute(AttributeType.HP)) + "点伤害,";
+        List<ContinueBuff> continueBuffs = buffPackage.getContinueBuffs();
+        for (ContinueBuff now : continueBuffs) {
+            if (now.getEffect().getAttribute(AttributeType.FIRE) > 0) {
+                message += player.getName() + "热到了,";
+            } else if (now.getEffect().getAttribute(AttributeType.COLD) > 0) {
+                message += player.getName() + "冷到了,";
+            } else if (now.getEffect().getAttribute(AttributeType.POISONOUS) > 0) {
+                message += player.getName() + "中毒了,";
+            } else if (now.getEffect().getAttribute(AttributeType.DIZZY) > 0) {
+                message += player.getName() + "晕倒了,";
+            }
+        }
+        message += player.getName() + "剩余"
+                + decimalFormat.format(player.getAttribute().getAttribute(AttributeType.HP)) + "点生命值.";
+        return message;
     }
 
     public void showWinner(Game game) {
@@ -69,52 +122,17 @@ public class GameLog {
         } else if (type.equals(AttributeType.FIRE)) {
             message += playerName + "受到" + decimalFormat.format(value) + "点火焰伤害, ";
         } else if (type.equals(AttributeType.LIFE_EXPERIENCE)) {
-            message += playerName + "获得了" + decimalFormat.format(value ) + "点人生的经验, ";
+            message += playerName + "获得了" + decimalFormat.format(value) + "点人生的经验, ";
         } else if (type.equals(AttributeType.CONTINUE_ONE_SECOND)) {
             message += "续一秒, ";
         }
-        message +=  playerName + "剩余生命：" + decimalFormat.format(playerHpRemain);
+        message += playerName + "剩余生命：" + decimalFormat.format(playerHpRemain);
         return message;
     }
 
     String buildDizzyMessage(String playerName, int round) {
         String message = "";
         message += playerName + "晕倒了，无法攻击, 眩晕还剩：" + round + "轮";
-        return message;
-    }
-
-    String buildAttackMessage(String playerName, String playerJobName, float hurt, float playerHpRemain, Player attacker, BuffPackage buffPackage) {
-        boolean isLucky = buffPackage.getImmediatelyEffect().getAttribute(AttributeType.LUCK) > 0;
-        DecimalFormat decimalFormat = new DecimalFormat("0");
-        String message = "";
-
-        String attackerJobName = attacker.getJobName();
-        String attackerTitle = attackerJobName + attacker.getName();
-
-        message += attackerTitle;
-        if (attacker.getWeapon() != null) {
-            message += "用" + attacker.getWeapon().getName();
-        }
-        message += "攻击了" + playerJobName + playerName;
-        if (isLucky) {
-            message += "," + attacker.getName() + "发动了全力一击";
-        }
-        message += ",对"
-                + playerName + "造成了" + decimalFormat.format(hurt) + "点伤害,";
-        List<ContinueBuff> continueBuffs = buffPackage.getContinueBuffs();
-        for (ContinueBuff now : continueBuffs) {
-            if (now.getEffect().getAttribute(AttributeType.FIRE) > 0) {
-                message += playerName + "热到了,";
-            } else if (now.getEffect().getAttribute(AttributeType.COLD) > 0) {
-                message += playerName + "冷到了,";
-            } else if (now.getEffect().getAttribute(AttributeType.POISONOUS) > 0) {
-                message += playerName + "中毒了,";
-            } else if (now.getEffect().getAttribute(AttributeType.DIZZY) > 0) {
-                message += playerName + "晕倒了,";
-            }
-        }
-        message += playerName + "剩余"
-                + decimalFormat.format(playerHpRemain) + "点生命值.";
         return message;
     }
 

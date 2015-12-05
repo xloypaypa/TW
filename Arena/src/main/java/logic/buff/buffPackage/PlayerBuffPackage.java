@@ -27,7 +27,9 @@ public class PlayerBuffPackage extends BuffPackage {
     }
 
     public void calculateUserImmediatelyBuff() {
-        player.getAttribute().mergeAttribute(this.getImmediatelyEffect());
+        Attribute immediatelyEffect = this.getImmediatelyEffect();
+        player.getAttribute().mergeAttribute(immediatelyEffect);
+        gameLog.playerBeAttacker(this, player);
         this.clearImmediatelyBuff();
     }
 

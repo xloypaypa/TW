@@ -2,7 +2,6 @@ package logic.game;
 
 import logic.attribute.AttributeType;
 import logic.buff.buffPackage.BuffPackage;
-import logic.log.GameLog;
 import logic.unit.player.Player;
 
 /**
@@ -13,14 +12,11 @@ public class DefaultRound extends Round {
 
     final float[] playerOldHp;
     final boolean[] attacked;
-    private final GameLog gameLog;
-    BuffPackage buffPackage;
 
-    public DefaultRound(Player[] players, GameLog gameLog) {
+    public DefaultRound(Player[] players) {
         super(players);
         this.playerOldHp = new float[players.length];
         this.attacked = new boolean[players.length];
-        this.gameLog = gameLog;
     }
 
     @Override
@@ -49,7 +45,7 @@ public class DefaultRound extends Round {
 
     @Override
     protected RoundStatus whenAction() {
-        buffPackage = attacker.getAttack();
+        BuffPackage buffPackage = attacker.getAttack();
         for (Player now : players) {
             if (now == attacker) {
                 continue;
@@ -63,19 +59,7 @@ public class DefaultRound extends Round {
     protected RoundStatus whenActionEnd() {
         for (Player now : players) {
             now.getPlayerBuff().calculateUserImmediatelyBuff();
-        }
-        if (buffPackage == null) {
-            return RoundStatus.ACTION_START;
-        }
-        for (int i = 0; i < players.length; i++) {
-            Player now = players[i];
-            if (now == attacker && now.getAttribute().getAttribute(AttributeType.HP) == playerOldHp[i]) {
-                continue;
-            }
-
-            gameLog.afterPlayerBeAttacked(now.getName(), now.getJobName(),
-                    playerOldHp[i] - now.getAttribute().getAttribute(AttributeType.HP),
-                    now.getAttribute().getAttribute(AttributeType.HP), attacker, buffPackage);
+            now.getPlayerBuff().clearBuffFromMessage();
         }
         return checkDieEnd();
     }

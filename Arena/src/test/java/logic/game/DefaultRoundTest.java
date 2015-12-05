@@ -1,10 +1,11 @@
 package logic.game;
 
 import logic.attribute.AttributeType;
-import logic.buff.*;
+import logic.buff.ColdBuff;
+import logic.buff.DizzyBuff;
+import logic.buff.FireBuff;
 import logic.buff.buffPackage.BuffFromMessage;
 import logic.buff.buffPackage.BuffPackage;
-import logic.log.GameLog;
 import logic.unit.player.NormalPlayer;
 import logic.unit.player.Player;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class DefaultRoundTest {
         BuffPackage buffPackage = new BuffPackage();
         when(playerA.getAttack()).thenReturn(buffPackage);
 
-        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());
+        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB});
 
         defaultRound.whenActionStart();
         defaultRound.whenAction();
@@ -41,32 +42,11 @@ public class DefaultRoundTest {
         Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
         Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
 
-        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());
+        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB});
 
         defaultRound.whenActionStart();
 
         assertEquals(100, defaultRound.playerOldHp[0], 1e-3);
-    }
-
-    @Test
-    public void should_write_log_when_action_end() {
-        Player playerA = NormalPlayer.getNewNormalPlayer("a", 100, 10);
-        Player playerB = NormalPlayer.getNewNormalPlayer("b", 100, 10);
-        playerA = spy(playerA);
-        playerB = spy(playerB);
-
-        BuffPackage buffPackage = new BuffPackage();
-        when(playerA.getAttack()).thenReturn(buffPackage);
-
-        GameLog gameLog = spy(GameLog.getGameLog());
-        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, gameLog);
-
-        defaultRound.whenRoundStart();
-        defaultRound.whenActionStart();
-        defaultRound.whenAction();
-        defaultRound.whenActionEnd();
-
-        verify(gameLog).afterPlayerBeAttacked(playerB.getName(), playerB.getJobName(), 0, 100, playerA, buffPackage);
     }
 
     @Test
@@ -78,7 +58,7 @@ public class DefaultRoundTest {
         buffPackage.addContinueBuff(new BuffFromMessage(), new DizzyBuff(3));
         playerA.attachBuff(buffPackage);
 
-        DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
+        DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}));
         assertEquals(Round.RoundStatus.ACTION_END, defaultRound.whenActionStart());
     }
 
@@ -91,11 +71,11 @@ public class DefaultRoundTest {
         buffPackage.addContinueBuff(new BuffFromMessage(), new ColdBuff(3));
         playerA.attachBuff(buffPackage);
 
-        DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
+        DefaultRound defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}));
         defaultRound.startARound();
-        defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
+        defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}));
         defaultRound.startARound();
-        defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog()));
+        defaultRound = spy(new DefaultRound(new Player[]{playerA, playerB}));
         assertEquals(Round.RoundStatus.ACTION_END, defaultRound.whenActionStart());
     }
 
@@ -108,7 +88,7 @@ public class DefaultRoundTest {
         buffPackage.addContinueBuff(new BuffFromMessage(), new FireBuff(3, 1));
         playerB.attachBuff(buffPackage);
 
-        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB}, GameLog.getGameLog());
+        DefaultRound defaultRound = new DefaultRound(new Player[]{playerA, playerB});
         defaultRound.whenRoundStart();
         assertEquals(99, playerB.getAttribute().getAttribute(AttributeType.HP), 1e-3);
     }
