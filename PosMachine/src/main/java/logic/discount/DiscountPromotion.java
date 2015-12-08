@@ -19,6 +19,6 @@ public class DiscountPromotion {
     }
 
     public double getValue() {
-        return value;
+        return value / 100;
     }
 }

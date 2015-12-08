@@ -28,7 +28,7 @@ public class PosMachineTest {
         List<Cart> carts = new ArrayList<>();
         carts.add(new Cart("ITEM000001", 1));
         carts.add(new Cart("ITEM000003", 2));
-        assertEquals(140, new PosMachine().calculatePrice(carts), 1e-3);
+        assertEquals(105, new PosMachine().calculatePrice(carts, new ItemValueCalculator()), 1e-3);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -36,7 +36,7 @@ public class PosMachineTest {
         List<Cart> carts = new ArrayList<>();
         carts.add(new Cart("ITEM000001", 1));
         carts.add(new Cart("ITEM000002", 2));
-        new PosMachine().calculatePrice(carts);
+        new PosMachine().calculatePrice(carts, new ItemValueCalculator());
     }
 
 }

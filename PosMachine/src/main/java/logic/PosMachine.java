@@ -14,14 +14,14 @@ public class PosMachine {
 
     public final static String ITEM_ERROR = "item error";
 
-    public double calculatePrice(Collection<Cart> carts) {
+    public double calculatePrice(Collection<Cart> carts, ItemValueCalculator itemValueCalculator) {
         double result = 0;
         for (Cart cart : carts) {
             Item item = ItemManager.getItemManager().getItem(cart.getItem());
             if (item == null) {
                 throw new IllegalArgumentException(ITEM_ERROR);
             }
-            result += cart.getNum() * item.getValue();
+            result += itemValueCalculator.getValue(item, cart.getNum());
         }
         return result;
     }
