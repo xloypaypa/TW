@@ -19,11 +19,12 @@ public class ItemValueCalculator {
                 .getDiscountPromotion(item.getKey());
         double oneValue = item.getValue() * discountPromotion.getValue();
         double result = 0;
-        result = getHalfPricePromotion(num, secondHalfPricePromotion, oneValue, result);
+        result += getHalfPricePromotion(num, secondHalfPricePromotion, oneValue);
         return result;
     }
 
-    protected double getHalfPricePromotion(int num, SecondHalfPricePromotion secondHalfPricePromotion, double oneValue, double result) {
+    protected double getHalfPricePromotion(int num, SecondHalfPricePromotion secondHalfPricePromotion, double oneValue) {
+        double result = 0;
         if (secondHalfPricePromotion != null) {
             result += oneValue * (num / 2);
             result += (oneValue * secondHalfPricePromotion.getValue()) * (num / 2);
