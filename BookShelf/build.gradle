@@ -36,4 +36,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile 'org.webjars:bootstrap:3.3.4'
     compile 'org.webjars:jquery:2.1.4'
+    testCompile "junit:junit:4.11"
+    testCompile group: 'net.sf.json-lib', name: 'json-lib', version:'2.4', classifier:'jdk15'
+    testCompile "org.springframework:spring-test:4.2.3.RELEASE"
 }
